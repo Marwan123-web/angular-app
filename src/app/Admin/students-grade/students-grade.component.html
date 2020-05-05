@@ -1,0 +1,64 @@
+<!-- ======= Main Section ======= -->
+<section class="main-section" id="main">
+
+    <div class="wave">
+
+        <svg width="100%" height="355px" viewBox="0 0 1920 355" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Apple-TV" transform="translate(0.000000, -402.000000)" fill="#FFFFFF">
+                    <path
+                        d="M0,439.134243 C175.04074,464.89273 327.944386,477.771974 458.710937,477.771974 C654.860765,477.771974 870.645295,442.632362 1205.9828,410.192501 C1429.54114,388.565926 1667.54687,411.092417 1920,477.771974 L1920,757 L1017.15166,757 L0,757 L0,439.134243 Z"
+                        id="Path"></path>
+                </g>
+            </g>
+        </svg>
+
+    </div>
+
+    <div class="container">
+        <div class="row row3 align-items-center">
+            <div class="table-wrapper">
+                <div class="form-group" *ngIf="courseGradeData">
+                    <select class="form-control" name="gradeType" required id="gradeType"
+                        (change)="selectChangeHandler($event)">
+                        <option disabled selected hidden>Grade Type *</option>
+                        <option *ngFor="let grade of courseGradeData.grades">{{grade.type}}</option>
+                    </select>
+                </div>
+                <table class="table grades-table" style="color: white;">
+                    <thead>
+                        <tr *ngIf="GradeTypeGrade">
+                            <th scope="col">Index</th>
+                            <th scope="col">Student ID</th>
+                            <th scope="col" *ngFor="let grade of GradeTypeGrade.grades">{{grade.type}}</th>
+                            <th scope="col" *ngFor="let grade of GradeTypeGrade.grades">{{grade.grade}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let grades of courseStudentsGrades ; let i = index">
+                            <th>{{i}}</th>
+                            <th scope="row"><a [routerLink]="['/user/profile', grades._id]">{{grades.studentId}}</a>
+                            </th>
+                            <td>{{grades.gradeType}}</td>
+                            <td>{{grades.score}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <br>
+                <br>
+                <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in" *ngIf="courseGradeData"
+                    [routerLink]="['/course/add-student-grade',courseGradeData.courseCode]" value="students-sheet">Add Grade
+                </button>
+                <button type="button" class="attend-btn courseInfo-btn hvr-rectangle-in" *ngIf="courseGradeData"
+                [routerLink]="['/course/update-student-grade',courseGradeData.courseCode]"  value="students-sheet">Update
+                    Grade
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</section>

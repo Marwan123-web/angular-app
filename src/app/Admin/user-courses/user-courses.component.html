@@ -1,0 +1,58 @@
+<!-- ======= Main Section ======= -->
+<section class="main-section" id="main">
+
+    <div class="wave">
+
+        <svg width="100%" height="355px" viewBox="0 0 1920 355" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Apple-TV" transform="translate(0.000000, -402.000000)" fill="#FFFFFF">
+                    <path
+                        d="M0,439.134243 C175.04074,464.89273 327.944386,477.771974 458.710937,477.771974 C654.860765,477.771974 870.645295,442.632362 1205.9828,410.192501 C1429.54114,388.565926 1667.54687,411.092417 1920,477.771974 L1920,757 L1017.15166,757 L0,757 L0,439.134243 Z"
+                        id="Path"></path>
+                </g>
+            </g>
+        </svg>
+
+    </div>
+
+    <div class="container">
+        <div class="row row3 align-items-center justify-content-center">
+            <div class="table-wrapper">
+                <table class="table courses-table" style="color: white; width: 1100px!important;">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Course 1</th>
+                            <th scope="col">Course 2</th>
+                            <th scope="col">Course 3</th>
+                            <th scope="col">Course 4</th>
+                            <th scope="col">Course 5</th>
+                            <th scope="col">Course 6</th>
+                            <th scope="col">Course 7</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="userdata">
+                        <tr>
+                            <th scope="row"><a [routerLink]="['/user/profile', userdata._id]">{{userdata._id}}</a></th>
+
+                            <td>
+                                {{userdata.name}}
+                            </td>
+                            <td *ngFor='let course of usercoursesdata'>{{course.courseName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <br>
+            <button *ngIf="userdata" type="button" class="attend-btn courseInfo-btn hvr-rectangle-in"
+                [routerLink]="['/user/add-delete-course',userdata._id]" value="students-sheet ">Add/Delete User Course
+            </button>
+
+        </div>user/update-user
+    </div>
+
+
+</section>
