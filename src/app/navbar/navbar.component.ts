@@ -4,6 +4,7 @@ declare var $: any;
 import { AuthService } from '../services/auth.service';
 import { User, Role } from '../_models';
 import { Router } from '@angular/router';
+import { AdminservicesService } from '../services/adminservices.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -13,12 +14,14 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   currentUser: User;
-
+  userdata: any;
   constructor(
     private router: Router,
-    private authenticationService: AuthService
+    private authenticationService: AuthService,
+    private adminservices: AdminservicesService
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    
   }
 
   get isAdmin() {
@@ -40,7 +43,11 @@ export class NavbarComponent implements OnInit {
   }
   ngOnInit(): void {
 
-
+    // this.adminservices.profile(this.currentUser._id).subscribe(res => {
+    //   this.userdata = res;
+    // }, err => {
+    //   this.userdata = err;
+    // });
   }
   homebtn: boolean = true;
   coursebtn: boolean = false;

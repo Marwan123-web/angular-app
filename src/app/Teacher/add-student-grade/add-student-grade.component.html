@@ -2,7 +2,8 @@
 <section class="main-section" id="main">
 
     <div class="wave">
-        <svg width="100%" height="355px" viewBox="0 0 1920 355" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <svg width="100%" height="355px" viewBox="0 0 1920 355" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <g id="Apple-TV" transform="translate(0.000000, -402.000000)" fill="#FFFFFF">
                     <path
@@ -23,25 +24,27 @@
 
                 <!-- User Grade -->
                 <div class="tab-pane fade show active" id="userGrade" role="tabpanel" aria-labelledby="userGrade-tab">
-                    <h3 class="addUser-heading">Add User Grade</h3>
+                    <h3 class="addUser-heading">Add Student Grade</h3>
                     <div class="row addUser-form">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="number" min="20201800" class="form-control" placeholder="User ID *" value="">
+                                <input type="number" min="20201800" class="form-control" placeholder="Student ID *"
+                                    #studentId value="">
                             </div>
-                            <div class="form-group">
-                                <select class="form-control" name="gradeType" required id="gradeType">
+                            <div class="form-group" *ngIf="coursedata">
+                                <select class="form-control" name="gradeType" required id="gradeType"
+                                    (change)="selectChangeHandler($event)">
                                     <option value="" disabled selected hidden>Grade Type *</option>
-                                    <option value="quiz">Quiz</option>
-                                    <option value="midterm">Midterm</option>
-                                    <option value="tutorial">Tutorial</option>
-                                    <option value="project">Project</option>
-                                    <option value="final">Final</option>
-                                </select> </div>
-                            <div class="form-group">
-                                <input type="number" min="0" max="100" class="form-control" placeholder="Score *" value="">
+                                    <option *ngFor="let grade of coursedata.grades">{{grade.type}}</option>
+                                </select>
                             </div>
-                            <input type="submit" class="btn-addUser btnRegister" style="margin-top: 5%!important; padding: 0!important;" value="Add">
+                            <div class="form-group">
+                                <input type="number" min="0" max="100" class="form-control" #score placeholder="Score *"
+                                    value="">
+                            </div>
+                            <input type="submit" class="btn-addUser btnRegister"
+                                style="margin-top: 5%!important; padding: 0!important;"
+                                (click)="addStudentGrade(studentId,score)" value="Add">
                         </div>
 
                     </div>

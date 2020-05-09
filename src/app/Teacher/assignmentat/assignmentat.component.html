@@ -26,18 +26,10 @@
                                         <th scope="col ">Path</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row ">Assignment 1</th>
-                                        <td><a href="www.task1.com ">www.task1.com</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row ">Assignment 1</th>
-                                        <td><a href="www.task1.com">www.task1.com</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row ">Assignment 1</th>
-                                        <td><a href="www.task1.com">www.task1.com</a></td>
+                                <tbody *ngIf='coursesdata'>
+                                    <tr *ngFor="let tasks of coursesdata.tasks">
+                                        <th scope="row ">{{tasks.type}}</th>
+                                        <td><a href="www.google.com" target="_blank">{{tasks.path}}</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -49,11 +41,12 @@
 
             </div>
             <div class="manage-btns">
-                <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in"
-                    routerLink="/teacher/course/add-task" value="students-sheet">Add Task
+                <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in" *ngIf="isTeacher"
+                    [routerLink]="['/course/add-task']"
+                     value="students-sheet">Add Task
                 </button>
-                <button type="button" class="attend-btn courseInfo-btn btn-danger hvr-rectangle-in"
-                    routerLink='/teacher/course/delete-task' value="students-sheet">Delete Task
+                <button type="button" class="attend-btn courseInfo-btn btn-danger hvr-rectangle-in" *ngIf="isTeacher"
+                [routerLink]="['/course/delete-task']" value="students-sheet">Delete Task
                 </button>
             </div>
         </div>

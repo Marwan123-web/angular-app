@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   Id: any;
   password: any;
   returnUrl: string;
-
+  response: any;
   constructor(private authservice: AuthService, private router: Router, private route: ActivatedRoute) {
     // get return url from route parameters or default to '/'
     if (this.authservice.currentUserValue) {
@@ -29,8 +29,10 @@ export class LoginComponent implements OnInit {
   loginUser(idinput: HTMLInputElement, passwordinput: HTMLInputElement) {
     this.Id = idinput.value, this.password = passwordinput.value;
     this.authservice.login(this.Id, this.password).pipe(first()).subscribe(res => {
+      this.response=res;
       this.router.navigate([this.returnUrl]);
     }, err => {
+      this.response=err;
       console.log('Fail to login');
     }
     );

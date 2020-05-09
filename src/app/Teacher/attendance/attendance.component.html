@@ -19,82 +19,23 @@
         <div class="row align-items-center">
             <div class="col-12 main-text-image">
                 <div class="row justify-content-center">
-                    <button type="button" class="attend-btn  hvr-rectangle-in" data-toggle="modal"
-                        data-target="#addLecture">Add Lecture</button>
-                    <button type="button" class="attend-btn  hvr-rectangle-in" data-toggle="modal"
-                        data-target="#addAttendance">Add Attendance</button>
-                    <button type="button" class="attend-btn attendsheet-btn hvr-rectangle-in"
-                        routerLink="/teacher/AttendanceSheetStudentComponent" value="attendance-sheet">View
+                    <button type="button" class="attend-btn  hvr-rectangle-in" data-toggle="modal" *ngIf="isTeacher"
+                        [routerLink]="['/course/add-lecture']">Add Lecture</button>
+                    <button type="button" class="attend-btn  hvr-rectangle-in" data-toggle="modal" *ngIf="isTeacher"
+                    [routerLink]="['/course/add-attendance']">Add Attendance</button>
+                    <button type="button" class="attend-btn attendsheet-btn hvr-rectangle-in" *ngIf="isTeacher"
+                    [routerLink]="['/teacher/AttendanceSheetStudentComponent']" value="attendance-sheet">View
+                        Attendance Sheet</button>
+                    <button type="button" class="attend-btn  hvr-rectangle-in" data-toggle="modal" *ngIf="isStudent"
+                    [routerLink]="['/course/attend-me']">Attend</button>
+                    <button type="button" class="attend-btn attendsheet-btn hvr-rectangle-in" *ngIf="isStudent"
+                    [routerLink]="['/course/attendance-sheet']"
+                        value="AttendanceSheetStudentComponent">View
                         Attendance Sheet</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Add Lecture Modal -->
-    <div class="modal fade" id="addLecture" tabindex="-1" role="dialog" aria-labelledby="addLectureLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addLectureLabel">New Lecture</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Lecture #:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Location:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add Lecture</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-
-        <!-- Add Attendance Modal -->
-        <div class="modal fade" id="addAttendance" tabindex="-1" role="dialog" aria-labelledby="addAttendanceLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addAttendanceLabel">Add Attendance</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Lecture #:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Location:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Beacon ID:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add Attendance</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </section>

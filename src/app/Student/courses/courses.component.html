@@ -30,8 +30,8 @@
                         <h3>{{course.courseName}}</h3>
                         <ul class="list-unstyled">
                             <li><strong>Course Code:</strong> {{course.courseCode}}</li>
-                        </ul>
-                        <p><a [routerLink]="['/course/home', course.courseCode]" class="btn btn-white">Open</a></p>
+                        </ul> 
+                        <p><a  (focus)="openCourse(course.courseCode)"  [routerLink]="['/course/home']" class="btn btn-white">Open</a></p>
                     </div>
                 </div>
 

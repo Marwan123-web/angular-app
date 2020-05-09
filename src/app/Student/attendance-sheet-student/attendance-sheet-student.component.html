@@ -2,13 +2,16 @@
 
     <div class="wave">
 
-        <svg width="100%" height="355px" viewBox="0 0 1920 355" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g id="Apple-TV" transform="translate(0.000000, -402.000000)" fill="#FFFFFF">
-        <path d="M0,439.134243 C175.04074,464.89273 327.944386,477.771974 458.710937,477.771974 C654.860765,477.771974 870.645295,442.632362 1205.9828,410.192501 C1429.54114,388.565926 1667.54687,411.092417 1920,477.771974 L1920,757 L1017.15166,757 L0,757 L0,439.134243 Z" id="Path"></path>
-      </g>
-    </g>
-  </svg>
+        <svg width="100%" height="355px" viewBox="0 0 1920 355" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Apple-TV" transform="translate(0.000000, -402.000000)" fill="#FFFFFF">
+                    <path
+                        d="M0,439.134243 C175.04074,464.89273 327.944386,477.771974 458.710937,477.771974 C654.860765,477.771974 870.645295,442.632362 1205.9828,410.192501 C1429.54114,388.565926 1667.54687,411.092417 1920,477.771974 L1920,757 L1017.15166,757 L0,757 L0,439.134243 Z"
+                        id="Path"></path>
+                </g>
+            </g>
+        </svg>
 
     </div>
 
@@ -19,104 +22,24 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Week</th>
-                        <th scope="col">Time</th>
+                        <th scope="col">Lecture Number</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Hall</th>
-                        <th scope="col">Beacon</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th rowspan="12" scope="row">20171882</th>
-                        <td rowspan="12">Ahmed Hassan Ibrahim</td>
-                        <td>Week 1</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
+                        <th rowspan="12" scope="row" *ngIf="mydata">{{mydata._id}}</th>
+                        <td rowspan="12" *ngIf="mydata">{{mydata.name}}</td>
+                        <td *ngFor="let attendancedata of myattendance">Week {{attendancedata.lectureNumber}}</td>
+                        <td *ngFor="let attendancedata of myattendance">{{attendancedata.Date}}</td>
+                        <td *ngFor="let attendancedata of myattendance">{{attendancedata.status}}</td>
                     </tr>
-                    <tr>
-                        <td>Week 2</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 3</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 4</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 5</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 6</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 7</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 8</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 9</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 10</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 11</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
-                    <tr>
-                        <td>Week 12</td>
-                        <td>14:00:02</td>
-                        <td>2/4/2020</td>
-                        <td>Hall 7</td>
-                        <td>Beacon#1</td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
-    
+
 
 </section>

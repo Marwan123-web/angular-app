@@ -31,8 +31,8 @@
                         <tr *ngIf="GradeTypeGrade">
                             <th scope="col">Index</th>
                             <th scope="col">Student ID</th>
-                            <th scope="col" *ngFor="let grade of GradeTypeGrade.grades">{{grade.type}}</th>
-                            <th scope="col" *ngFor="let grade of GradeTypeGrade.grades">{{grade.grade}}</th>
+                            <th scope="col" *ngFor="let grade of GradeTypeGrade.grades">{{grade.type}}
+                                <span>({{grade.grade}})</span> </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +40,6 @@
                             <th>{{i}}</th>
                             <th scope="row"><a [routerLink]="['/user/profile', grades._id]">{{grades.studentId}}</a>
                             </th>
-                            <td>{{grades.gradeType}}</td>
                             <td>{{grades.score}}</td>
 
                         </tr>
@@ -49,11 +48,13 @@
                 <br>
                 <br>
                 <br>
-                <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in" *ngIf="courseGradeData"
-                    [routerLink]="['/course/add-student-grade',courseGradeData.courseCode]" value="students-sheet">Add Grade
+                <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in"
+                    *ngIf="courseGradeData" [routerLink]="['/course/add-student-grade',courseGradeData.courseCode]"
+                    value="students-sheet">Add Grade
                 </button>
                 <button type="button" class="attend-btn courseInfo-btn hvr-rectangle-in" *ngIf="courseGradeData"
-                [routerLink]="['/course/update-student-grade',courseGradeData.courseCode]"  value="students-sheet">Update
+                    [routerLink]="['/course/update-student-grade',courseGradeData.courseCode]"
+                    value="students-sheet">Update
                     Grade
                 </button>
             </div>

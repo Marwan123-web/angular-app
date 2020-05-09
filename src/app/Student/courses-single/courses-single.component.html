@@ -28,18 +28,18 @@
                 <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="" *ngIf="coursesdata">
                     <button type="button" *ngIf="isTeacherOrStudent"
                         class="attend-btn courses-btn btn-secondary hvr-rectangle-in"
-                        [routerLink]="['/course/information', coursesdata.courseCode]"
+                        [routerLink]="['/course/information']"
                         value="courses-info">Information</button>
                     <button type="button" *ngIf="isTeacherOrStudent" class="attend-btn courses-btn hvr-rectangle-in"
-                        [routerLink]="['/course/attendance', coursesdata.courseCode]"
+                        [routerLink]="['/course/attendance']"
                         value="attendance">Attendance</button>
                     <button type="button" *ngIf="isTeacherOrStudent" class="attend-btn courses-btn hvr-rectangle-in"
-                        [routerLink]="['/course/assignments', coursesdata.courseCode]"
+                        [routerLink]="['/course/assignments']"
                         value="assignmentat">Assignments</button>
                     <button type="button" *ngIf="isStudent" class="attend-btn courses-btn hvr-rectangle-in"
-                        [routerLink]="['/course/mygrades', coursesdata.courseCode]" value="grades">Grades</button>
+                        [routerLink]="['/course/mygrades']" value="grades">Grades</button>
                     <button type="button" *ngIf="isTeacher" class="attend-btn courses-btn hvr-rectangle-in"
-                        [routerLink]="['/course/students/grades', coursesdata.courseCode]"
+                        [routerLink]="['/course/students/grades']"
                         value="grades">Grades</button>
                 </div>
             </div>

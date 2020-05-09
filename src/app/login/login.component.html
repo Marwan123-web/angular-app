@@ -33,8 +33,8 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                <input type="password" class="form-control" name="password" placeholder="Password" #password
-                                    required="required">
+                                <input type="password" class="form-control" name="password" placeholder="Password"
+                                    #password required="required">
                             </div>
                         </div>
                         <div class="form-group">
@@ -42,10 +42,16 @@
                                 class="btn btn-primary btn-block btn-lg">Sign
                                 In</button>
                         </div>
-
                     </div>
                 </div>
+                <div class="alert alert-danger" role="alert" *ngIf="response">
+                    {{response}}
+                </div>
             </div>
+
+
+
+
         </div>
     </div>
 

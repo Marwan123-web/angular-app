@@ -17,8 +17,8 @@
 
     <div class="container">
         <div class="row row2 align-items-center">
-            <div class="col-lg-7 text-center text-lg-left">
-                <h1 data-aos="fade-right">CourseName</h1>
+            <div class="col-lg-7 text-center text-lg-left" *ngIf="coursesdata" style="margin-top: 200px;">
+                <h1 data-aos="fade-right">{{coursesdata.courseName}}</h1>
                 <div class="mb-5" data-aos="fade-right" data-aos-delay="100">
                     <table>
                         <tr>
@@ -26,7 +26,7 @@
                                 <p style="font-weight: bold;">Course Code:</p>
                             </td>
                             <td>
-                                <p>IS211</p>
+                                <p>{{coursesdata.courseCode}}</p>
                             </td>
                         </tr>
                         <tr>
@@ -34,15 +34,7 @@
                                 <p style="font-weight: bold;">Department:</p>
                             </td>
                             <td>
-                                <p>Information Systems</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p style="font-weight: bold;">Academic Level:</p>
-                            </td>
-                            <td>
-                                <p>200</p>
+                                <p>{{coursesdata.courseDepartment}}</p>
                             </td>
                         </tr>
                         <tr>
@@ -50,7 +42,7 @@
                                 <p style="font-weight: bold;">Credit Hours:</p>
                             </td>
                             <td>
-                                <p>3</p>
+                                <p>{{coursesdata.creaditHours}}</p>
                             </td>
                         </tr>
                         <tr>
@@ -61,19 +53,12 @@
                                 <table class="table" style="color: white;">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Midterm</th>
-                                            <th scope="col">Quiz 1</th>
-                                            <th scope="col">Practical</th>
-                                            <th scope="col">Final</th>
-                                            <th scope="col">Total</th>
+                                            <th scope="col" *ngFor='let grade of coursesdata.grades'>{{grade.type}}</th>
                                         </tr>
                                     </thead>
                                     <tr>
-                                        <td>20</td>
-                                        <td>10</td>
-                                        <td>20</td>
-                                        <td>50</td>
-                                        <td>100</td>
+                                        <td *ngFor='let grade of coursesdata.grades'>{{grade.grade}}</td>
+
                                     </tr>
                                 </table>
                             </td>
@@ -108,15 +93,15 @@
                     </tr>
                 </table>
             </div>
-            <button type="button" class="attend-btn courseInfo-btn btn-dark hvr-rectangle-in"
-                routerLink='/course/info/student-sheet' value="students-sheet">Students
+            <button type="button" class="attend-btn courseInfo-btn btn-dark hvr-rectangle-in" *ngIf="isTeacher"
+                [routerLink]="['/course/students-sheet']" value="students-sheet">Students
                 Sheet
             </button>
-            <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in"
-                routerLink='/course/info/add-course-grade' value="students-sheet">Add Course Grades
+            <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in" *ngIf="isTeacher"
+                [routerLink]="['/course/add-course-grade']" value="students-sheet">Add Course Grades
             </button>
-            <button type="button" class="attend-btn courseInfo-btn btn-danger hvr-rectangle-in"
-                routerLink='/course/info/delete-course-grade' value="students-sheet">Delete Course Grades
+            <button type="button" class="attend-btn courseInfo-btn btn-danger hvr-rectangle-in" *ngIf="isTeacher"
+                [routerLink]="['/course/delete-course-grade']" value="students-sheet">Delete Course Grades
             </button>
         </div>
     </div>

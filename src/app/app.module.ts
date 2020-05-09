@@ -64,6 +64,19 @@ import { CoursesSingleComponentt } from './Teacher/courses-single/courses-single
 import { CoursesInfoComponentt } from './Teacher/courses-info/courses-info.component';
 import { GradesComponentt } from './Teacher/grades/grades.component';
 import { AssignmentatComponentt } from './Teacher/assignmentat/assignmentat.component';
+import { AddCourseStudentGradeComponent } from './Teacher/add-student-grade/add-student-grade.component';
+import { TeacherAddCourseGradeComponent } from './Teacher/add-course-grade/add-course-grade.component';
+import { TeacherDeleteCourseGradeComponent } from './Teacher/delete-course-grade/delete-course-grade.component';
+import { TeacherStudentSheetComponent } from './Teacher/student-sheet/student-sheet.component';
+
+import { AddLectureComponent } from './Teacher/add-lecture/add-lecture.component';
+
+import { AddAttendanceComponent } from './Teacher/add-attendance/add-attendance.component';
+
+
+import { AttendmeComponent } from './Teacher/attendme/attendme.component';
+
+
 
 import { AttendanceSheetStudentComponentt } from './Teacher/attendance-sheet-student/attendance-sheet-student.component';
 import { AddTaskComponent } from './Teacher/add-task/add-task.component';
@@ -71,6 +84,7 @@ import { DeleteTaskComponent } from './Teacher/delete-task/delete-task.component
 import { LoginComponent } from './login/login.component';
 import { from } from 'rxjs';
 import { JwtInterceptor } from './_helpers';
+
 
 @NgModule({
   declarations: [
@@ -118,11 +132,13 @@ import { JwtInterceptor } from './_helpers';
     AttendanceSheetStudentComponent,
 
 
+    AddCourseStudentGradeComponent,
+    TeacherAddCourseGradeComponent,
+    TeacherDeleteCourseGradeComponent,
+    TeacherStudentSheetComponent,
 
-
-
-
-
+    AddLectureComponent,
+    AddAttendanceComponent,
 
 
 
@@ -138,6 +154,7 @@ import { JwtInterceptor } from './_helpers';
     AddTaskComponent,
     DeleteTaskComponent,
     LoginComponent,
+    AttendmeComponent,
   ],
   imports: [
     BrowserModule,
@@ -283,36 +300,85 @@ import { JwtInterceptor } from './_helpers';
         canActivate: [AuthGuard],
       },
       {
-        path: 'course/home/:id', component: CoursesSingleComponent,
+        path: 'course/home', component: CoursesSingleComponent,
         canActivate: [AuthGuard],
       },
 
       {
-        path: 'course/attendance/:id', component: AttendanceComponentt,
+        path: 'course/attendance', component: AttendanceComponentt,
+        canActivate: [AuthGuard],
+      },
+
+      
+      {
+        path: 'course/attend-me', component: AttendmeComponent,
         canActivate: [AuthGuard],
       },
 
       {
-        path: 'course/information/:id', component: CoursesInfoComponentt,
+        path: 'course/add-lecture', component: AddLectureComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'course/add-attendance', component: AddAttendanceComponent,
+        canActivate: [AuthGuard],
+      },
+
+
+      {
+        path: 'course/information', component: CoursesInfoComponentt,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'course/add-course-grade', component: TeacherAddCourseGradeComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'course/delete-course-grade', component: TeacherDeleteCourseGradeComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'course/students-sheet', component: TeacherStudentSheetComponent,
+        canActivate: [AuthGuard],
+      },
+
+
+      {
+        path: 'course/mygrades', component: GradesComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Student] }
+      },
+      {
+        path: 'course/students/grades', component: GradesComponentt,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
+      },
+      {
+        path: 'course/add-grade', component: AddCourseStudentGradeComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
+      },
+
+      {
+        path: 'course/assignments', component: AssignmentatComponentt,
         canActivate: [AuthGuard],
       },
 
       {
-        path: 'course/assignments/:id', component: AssignmentatComponentt,
+        path: 'course/add-task', component: AddTaskComponent,
         canActivate: [AuthGuard],
-      },
-
-      {
-        path: 'course/mygrades/:id', component: GradesComponent,
-        canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
       },
       {
-        path: 'course/students/grades/:id', component: GradesComponentt,
+        path: 'course/delete-task', component: DeleteTaskComponent,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
       },
 
 
-      { path: 'student/AttendanceSheetStudentComponent', component: AttendanceSheetStudentComponent },
+
+
+      { path: 'course/attendance-sheet', component: AttendanceSheetStudentComponent },
 
 
       { path: 'student/notifications', component: NotificationsComponent },
@@ -330,8 +396,7 @@ import { JwtInterceptor } from './_helpers';
 
       { path: 'teacher/AttendanceSheetStudentComponent', component: AttendanceSheetStudentComponentt },
 
-      { path: 'teacher/course/add-task', component: AddTaskComponent },
-      { path: 'teacher/course/delete-task', component: DeleteTaskComponent },
+
 
 
 

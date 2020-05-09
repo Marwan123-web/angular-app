@@ -52,30 +52,19 @@
                                     <td>
                                         <p style="font-weight: bold;">Course Grades</p>
                                     </td>
-                                    <td *ngFor='let grade of coursedata.grades'>
-                                        <!-- <th scope="col">{{grade.type}}</th>
-                                    <td>{{grade.grade}}</td> -->
-                                        <p>{{grade.type}}</p>
-                                        <p>---------</p>
-                                        <p>{{grade.grade}}</p>
-                                        <!-- <table class="table" style="color: white;" *ngFor='let grade of coursedata.grades'>
+                                    <td>
+                                        <table class="table" style="color: white;">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Midterm</th>
-                                                    <th scope="col">Quiz 1</th>
-                                                    <th scope="col">Practical</th>
-                                                    <th scope="col">Final</th>
-                                                    <th scope="col">Total</th>
+                                                    <th scope="col" *ngFor='let grade of coursedata.grades'>
+                                                        {{grade.type}}</th>
                                                 </tr>
                                             </thead>
                                             <tr>
-                                                <td>20</td>
-                                                <td>10</td>
-                                                <td>20</td>
-                                                <td>50</td>
-                                                <td>100</td>
+                                                <td *ngFor='let grade of coursedata.grades'>{{grade.grade}}</td>
+
                                             </tr>
-                                        </table> -->
+                                        </table>
                                     </td>
                                 </tr>
 
@@ -125,7 +114,7 @@
             Grades
         </button>
         <button type="button" class="attend-btn courseInfo-btn hvr-rectangle-in"
-        [routerLink]="['/course/students-grades', coursedata.courseCode]" value="students-sheet">Students Grade
+            [routerLink]="['/course/students-grades', coursedata.courseCode]" value="students-sheet">Students Grade
         </button>
     </div>
 
