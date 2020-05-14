@@ -14,12 +14,14 @@ import { Course } from 'src/app/_models/course';
 export class AddTaskComponent implements OnInit {
 
   currentUser: User;
-currentCourse: Course;
+  currentCourse: Course;
   _id: string;
   coursesdata: any;
-  
+
   taskType: string;
   taskPath: string;
+  response: any;
+  error: any;
 
   constructor(
     private router: Router,
@@ -43,16 +45,28 @@ currentCourse: Course;
     return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
   }
   AddTask(taskType: HTMLInputElement, taskPath: HTMLInputElement) {
-    this.taskType = taskType.value, this.taskPath = taskPath.value,
-      this.teacherservices.addCourseTask(this.currentCourse.courseCode, this.taskType, this.taskPath).subscribe(res => {
-        // console.log(this.currentCourse.courseCode)
-        console.log('Done');
-        taskType.value = "";
-        taskPath.value = "";
-      }, err => {
-        console.log('Fail');
+    this.taskType = taskType.value, this.taskPath = taskPath.value;
+    let response = document.getElementById('response');
+    let error = document.getElementById('error');
+    this.teacherservices.addCourseTask(this.currentCourse.courseCode, this.taskType, this.taskPath).subscribe(res => {
+      this.response = res;
+      if (error.classList.contains('d-block')) {
+        error.classList.replace('d-block', 'd-none');
       }
-      );
+      response.classList.replace('d-none', 'd-block');
+      response.innerHTML = this.response.msg;
+
+      taskType.value = "";
+      taskPath.value = "";
+    }, err => {
+      this.error = err.error;
+      if (response.classList.contains('d-block')) {
+        response.classList.replace('d-block', 'd-none');
+      }
+      error.classList.replace('d-none', 'd-block');
+      error.innerHTML = this.error.msg;
+    }
+    );
   }
 
   ngOnInit(): void {

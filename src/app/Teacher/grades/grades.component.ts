@@ -66,16 +66,18 @@ export class GradesComponentt implements OnInit {
     this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
       this.courseGradeData = res;
       this.x = this.courseGradeData.grades[0].type;
-      this.teacherservices.getCourseGrades(this.currentCourse.courseCode, this.x).subscribe(res => {
-        this.GradeTypeGrade = res;
-        this.teacherservices.getCourseStudentsGrades(this.currentCourse.courseCode, this.x).subscribe(res => {
-          this.courseStudentsGrades = res;
+      if (this.x ) {
+        this.teacherservices.getCourseGrades(this.currentCourse.courseCode, this.x).subscribe(res => {
+          this.GradeTypeGrade = res;
+          this.teacherservices.getCourseStudentsGrades(this.currentCourse.courseCode, this.x).subscribe(res => {
+            this.courseStudentsGrades = res;
+          }, err => {
+            this.courseStudentsGrades = err;
+          });
         }, err => {
-          this.courseStudentsGrades = err;
+          this.GradeTypeGrade = err;
         });
-      }, err => {
-        this.GradeTypeGrade = err;
-      });
+      }
     }, err => {
       this.courseGradeData = err;
     });

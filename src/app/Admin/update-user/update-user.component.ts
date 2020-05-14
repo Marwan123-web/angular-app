@@ -12,6 +12,8 @@ export class UpdateUserComponent implements OnInit {
   email: string;
   password: string;
   role: string;
+  response: any;
+  error: any;
   constructor(private adminservices: AdminservicesService) { }
 
   selectChangeHandler(event: any) {
@@ -20,16 +22,29 @@ export class UpdateUserComponent implements OnInit {
   }
   updateUser(id: HTMLInputElement, name: HTMLInputElement, email: HTMLInputElement, password: HTMLInputElement) {
     this._id = id.value, this.name = name.value, this.email = email.value, this.password = password.value;
+    let response = document.getElementById('response');
+    let error = document.getElementById('error');
     this.adminservices.updateUser(this._id, this.name, this.email, this.password, this.role).subscribe(res => {
-      console.log('Done');
+      this.response = res;
+      if (error.classList.contains('d-block')) {
+        error.classList.replace('d-block', 'd-none');
+      }
+      response.classList.replace('d-none', 'd-block');
+      response.innerHTML = this.response.msg;
+      id.value = "";
+      name.value = "";
+      email.value = "";
+      password.value = "";
     }, err => {
-      console.log('Fail');
+      this.error = err.error;
+      if (response.classList.contains('d-block')) {
+        response.classList.replace('d-block', 'd-none');
+      }
+      error.classList.replace('d-none', 'd-block');
+      error.innerHTML = this.error.msg;
     }
     );
-    id.value = "";
-    name.value = "";
-    email.value = "";
-    password.value = "";
+
   }
   ngOnInit(): void {
   }

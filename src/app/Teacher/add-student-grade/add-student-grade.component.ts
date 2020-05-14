@@ -23,6 +23,8 @@ export class AddCourseStudentGradeComponent implements OnInit {
   gradeType: any;
   studentId: string;
   score: string;
+  response: any;
+  error: any;
 
 
   constructor(
@@ -53,21 +55,27 @@ export class AddCourseStudentGradeComponent implements OnInit {
   addStudentGrade(studentId: HTMLInputElement, score: HTMLInputElement) {
 
     this.studentId = studentId.value, this.score = score.value;
-
+    let response = document.getElementById('response');
+    let error = document.getElementById('error');
     this.teacherservices.addStudentGrade(this.currentCourse.courseCode, this.studentId, this.gradeType, this.score).subscribe(res => {
-      this.coursedata = res;
-      this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
-        this.coursedata = res;
-      }, err => {
-        this.coursedata = err
+      this.response = res;
+      if (error.classList.contains('d-block')) {
+        error.classList.replace('d-block', 'd-none');
       }
-      );
-    }, err => {
-      this.coursedata = err
-    });
-    studentId.value = "";
-    score.value = "";
+      response.classList.replace('d-none', 'd-block');
+      response.innerHTML = this.response.msg;
 
+      studentId.value = "";
+      score.value = "";
+    }, err => {
+      this.error = err.error;
+      if (response.classList.contains('d-block')) {
+        response.classList.replace('d-block', 'd-none');
+      }
+      error.classList.replace('d-none', 'd-block');
+      error.innerHTML = this.error.msg;
+    }
+    );
   };
   ngOnInit(): void {
 

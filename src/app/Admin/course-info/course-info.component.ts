@@ -11,12 +11,20 @@ export class CourseInfoComponent implements OnInit {
 
   _id: any;
   coursedata: any;
+  numberofusers: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router) { }
   sub: any;
   ngOnInit(): void {
+    
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
+      this.adminservices.getCourseStudentsSheet(this._id).subscribe(res => {
+        this.numberofusers = res.length;
+      }, err => {
+        this.numberofusers = err
+      }
+      );
       this.adminservices.getCourseData(this._id).subscribe(res => {
         this.coursedata = res;
       }, err => {

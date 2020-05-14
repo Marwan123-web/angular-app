@@ -28,12 +28,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th rowspan="12" scope="row" *ngIf="mydata">{{mydata._id}}</th>
-                        <td rowspan="12" *ngIf="mydata">{{mydata.name}}</td>
-                        <td *ngFor="let attendancedata of myattendance">Week {{attendancedata.lectureNumber}}</td>
-                        <td *ngFor="let attendancedata of myattendance">{{attendancedata.Date}}</td>
-                        <td *ngFor="let attendancedata of myattendance">{{attendancedata.status}}</td>
+
+                    <th rowspan="12" scope="row" *ngIf="mydata">{{mydata._id}}</th>
+                    <td rowspan="12" *ngIf="mydata">{{mydata.name}}</td>
+                    <tr *ngFor="let attendancedata of myattendance">
+                        <td >Week {{attendancedata.lectureNumber}}</td>
+                        <td>{{attendancedata.Date}}</td>
+                        <td>{{attendancedata.status}}</td>
                     </tr>
 
                 </tbody>

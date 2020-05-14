@@ -5,20 +5,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
 @Component({
-  selector: 'app-delete-course-grade',
-  templateUrl: './delete-course-grade.component.html',
-  styleUrls: ['./delete-course-grade.component.scss']
+  selector: 'app-update-student-grade',
+  templateUrl: './update-student-grade.component.html',
+  styleUrls: ['./update-student-grade.component.scss']
 })
-export class TeacherDeleteCourseGradeComponent implements OnInit {
+export class UpdateStudentGradetComponent implements OnInit {
   currentUser: User;
   currentCourse: Course;
-  _id: any;
-  gradetype: any;
-  grade: any;
   response: any;
-  coursedata: any;
   error: any;
   constructor(
     private router: Router,
@@ -30,22 +25,36 @@ export class TeacherDeleteCourseGradeComponent implements OnInit {
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentUser = this.authenticationService.currentUserValue;
   }
+
+
+  coursedata: any;
+  gradeType: any;
+  studentId: any;
+  score: any;
+  studentedata: any;
 
   selectChangeHandler(event: any) {
     //update the ui
-    this.gradetype = event.target.value;
+    this.gradeType = event.target.value;
   }
-  deleteCourseGrade() {
+  updateStudentGradefun(studentId: HTMLInputElement, score: HTMLInputElement) {
+
+
+    this.studentId = studentId.value, this.score = score.value;
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.teacherservices.deleteCourseGrade(this.currentCourse.courseCode, this.gradetype).subscribe(res => {
+    this.teacherservices.updateStudentGrade(this.currentCourse.courseCode, this.studentId, this.gradeType, this.score).subscribe(res => {
       this.response = res;
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');
       }
       response.classList.replace('d-none', 'd-block');
       response.innerHTML = this.response.msg;
+
+      studentId.value = "";
+      score.value = "";
     }, err => {
       this.error = err.error;
       if (response.classList.contains('d-block')) {
@@ -55,11 +64,9 @@ export class TeacherDeleteCourseGradeComponent implements OnInit {
       error.innerHTML = this.error.msg;
     }
     );
-
-
-
-  }
+  };
   ngOnInit(): void {
+
     this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
       this.coursedata = res;
     }, err => {
@@ -68,5 +75,4 @@ export class TeacherDeleteCourseGradeComponent implements OnInit {
     );
 
   }
-
 }

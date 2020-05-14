@@ -36,6 +36,10 @@ export class AdminservicesService {
   getCourseGradeType: any;
   userId: any;
   updateStudentGradeBody: any;
+  updateuserIdbody: any;
+  updateCourseIdBody: any;
+  studentIdBody: any;
+  courseIdBody: any;
 
   constructor(private httpClient: HttpClient) { }
   public profile(id): Observable<any> {
@@ -58,9 +62,10 @@ export class AdminservicesService {
   }
 
   public updateUser(_id, name, email, password, role): Observable<any> {
-    this.updateuserbody = { _id, name, email, password, role }
+    this.updateuserIdbody = _id;
+    this.updateuserbody = { name, email, password, role }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put('http://localhost:3000/update/user', this.updateuserbody, { headers: headers });
+    return this.httpClient.put(`http://localhost:3000/update/user/${this.updateuserIdbody}`, this.updateuserbody, { headers: headers });
   }
 
   public deleteUser(_id): Observable<any> {
@@ -116,9 +121,10 @@ export class AdminservicesService {
   }
 
   public updateCourse(courseCode, courseName, courseDepartment, creaditHours): Observable<any> {
-    this.updateCourseBody = { courseCode, courseName, courseDepartment, creaditHours }
+    this.updateCourseIdBody = courseCode;
+    this.updateCourseBody = { courseName, courseDepartment, creaditHours }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put('http://localhost:3000/update/course', this.updateCourseBody, { headers: headers });
+    return this.httpClient.put(`http://localhost:3000/update/course/${this.updateCourseIdBody}`, this.updateCourseBody, { headers: headers });
   }
 
   public deleteCourse(courseCode): Observable<any> {
@@ -131,7 +137,6 @@ export class AdminservicesService {
   public addCourseGrade(courseCode, type, grade): Observable<any> {
     this.addCourseGradeBody = { type, grade };
     this.addCourseGradeId = courseCode;
-    console.log(this.addCourseGradeId);
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     return this.httpClient.post(`http://localhost:3000/add/course/grade/${this.addCourseGradeId}`, this.addCourseGradeBody, { headers: headers });
   }
@@ -160,11 +165,12 @@ export class AdminservicesService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     return this.httpClient.post(`http://localhost:3000/add/student/grade/${this.addStudentGradeId}`, this.addStudentGradeBody, { headers: headers });
   }
-  public updateStudentGrade(studentId, courseId, gradeType, score): Observable<any> {
-    this.updateStudentGradeBody = { studentId, courseId, gradeType, score}
-    console.log(this.updateStudentGradeBody)
+  public updateStudentGrade(courseId, studentId, gradeType, score): Observable<any> {
+    this.updateStudentGradeBody = { gradeType, score };
+    this.studentIdBody = studentId;
+    this.courseIdBody = courseId
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put('http://localhost:3000/update/student/grade', this.updateStudentGradeBody, { headers: headers });
+    return this.httpClient.put(`http://localhost:3000/update/student/grade/${this.studentIdBody}/${this.courseIdBody}`, this.updateStudentGradeBody, { headers: headers });
   }
 
   public getCourseGrades(courseCode, gradeType): Observable<any> {

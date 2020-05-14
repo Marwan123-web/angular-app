@@ -49,8 +49,8 @@ export class AttendanceSheetStudentComponent implements OnInit {
     }, err => {
       this.mydata = err;
     });
-    this.teacherservices.myattendancesheet(this.currentUser._id,this.currentCourse.courseCode).subscribe(res => {
-      this.myattendance = res
+    this.teacherservices.myattendancesheet(this.currentUser._id, this.currentCourse.courseCode).subscribe(res => {
+      this.myattendance = res;
     }, err => {
       this.myattendance = err;
     });

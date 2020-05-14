@@ -37,8 +37,12 @@
                                 <input type="text" class="form-control" #beaconId placeholder="Beacon ID:" value="">
                             </div>
                             <button type="submit" class="btn btn-primary btn-block btn-lg"
-                                (click)="AddAttendance(lectureNumber,beaconId)">Add Lecture</button>
+                                (click)="AddAttendance(lectureNumber,beaconId)">Add Attendance</button>
                         </div>
+                    </div>
+                    <div id="responsediv">
+                        <div class="alert alert-primary d-none" role="alert" id="response"></div>
+                        <div class="alert alert-danger d-none" role="alert" id="error"></div>
                     </div>
                 </div>
 

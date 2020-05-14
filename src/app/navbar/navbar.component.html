@@ -30,17 +30,18 @@
                             <li><a routerLink="/users" *ngIf="isAdmin" (click)="activebtn('user')" name='user'
                                     [class.active]='userbtn==true' class="nav-link">Users</a></li>
 
-                            <li><a routerLink='/mycourses'  *ngIf="isTeacherOrStudent" (click)="activebtn('courses')"  name='courses'
-                                [class.active]='coursesbtn==true' class="nav-link">Courses</a></li>
+                            <li><a routerLink='/mycourses' *ngIf="isTeacherOrStudent" (click)="activebtn('courses')"
+                                    name='courses' [class.active]='coursesbtn==true' class="nav-link">Courses</a></li>
                             <li><a routerLink='/student/notifications' (click)="activebtn('noti')" name='noti'
-                                [class.active]='notibtn==true'   *ngIf="isTeacherOrStudent" class="nav-link">Notifications</a></li>
+                                    [class.active]='notibtn==true' *ngIf="isTeacherOrStudent"
+                                    class="nav-link">Notifications</a></li>
 
                             <li class="has-children">
                                 <a routerLink="/profile" class="nav-link" (click)="activebtn('profile')" name='profile'
-                                    [class.active]='profilebtn==true'>Username</a>
+                                    *ngIf="username" [class.active]='profilebtn==true'>{{currentUser.name}}</a>
                                 <ul class="dropdown">
-                                    <li><a routerLink="/profile" (click)="activebtn('name')" name="name" [class.active]='profilebtn==true'
-                                            class="nav-link">Profile</a></li>
+                                    <li><a routerLink="/profile" (click)="activebtn('name')" name="name"
+                                            [class.active]='profilebtn==true' class="nav-link">Profile</a></li>
                                     <li><a (click)="logout()" class="nav-link">Logout</a></li>
                                 </ul>
                             </li>

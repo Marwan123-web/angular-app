@@ -25,6 +25,7 @@
                 <!-- Add Course -->
                 <div class="tab-pane fade show active" id="addCourse" role="tabpanel" aria-labelledby="addCourse-tab">
                     <h3 class="addUser-heading">Add Course</h3>
+
                     <div class="row addUser-form">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -39,7 +40,7 @@
                                 <!-- <input type="text" class="form-control" placeholder="Department *" #courseDepartment
                                     value=""> -->
                                 <select class="form-control" id='department' (change)="selectChangeHandler($event)">
-                                    <option value="">*Select Course Department</option>
+                                    <option value="" disabled selected hidden>Select Course Department</option>
                                     <option data-id="IS" value="Information Systems">Information Systems</option>
                                     <option data-id="CS" value="Computer Science">Computer Science</option>
                                     <option data-id="IT" value="Internet Technology">Internet Technology</option>
@@ -52,7 +53,14 @@
                             <input type="submit" class="btn-addUser btnRegister"
                                 (click)="addCourse(courseCode,courseName,creaditHours)" style="margin-top:15px!"
                                 value="Add">
+
                         </div>
+
+
+                    </div>
+                    <div id="responsediv">
+                        <div class="alert alert-primary d-none" role="alert" id="response"></div>
+                        <div class="alert alert-danger d-none" role="alert" id="error"></div>
                     </div>
                 </div>
 

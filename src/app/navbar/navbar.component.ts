@@ -14,14 +14,14 @@ import { AdminservicesService } from '../services/adminservices.service';
 export class NavbarComponent implements OnInit {
 
   currentUser: User;
-  userdata: any;
+  username: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
     private adminservices: AdminservicesService
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    
+
   }
 
   get isAdmin() {
@@ -42,12 +42,17 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
   }
   ngOnInit(): void {
+    if (this.currentUser) {
+      this.adminservices.profile(this.currentUser._id).subscribe(res => {
+        this.username = res.name;
+      }, err => {
+        this.username = err;
+      });
+    }
+    else {
+      this.username = 'Username';
+    }
 
-    // this.adminservices.profile(this.currentUser._id).subscribe(res => {
-    //   this.userdata = res;
-    // }, err => {
-    //   this.userdata = err;
-    // });
   }
   homebtn: boolean = true;
   coursebtn: boolean = false;
@@ -61,56 +66,56 @@ export class NavbarComponent implements OnInit {
       this.homebtn = false;
       this.userbtn = false;
       this.profilebtn = false;
-      this.coursesbtn=false;
-      this.notibtn=false;
+      this.coursesbtn = false;
+      this.notibtn = false;
     }
     else if (name == 'home') {
       this.coursebtn = false;
       this.homebtn = true;
       this.userbtn = false;
       this.profilebtn = false;
-      this.coursesbtn=false;
-      this.notibtn=false;
+      this.coursesbtn = false;
+      this.notibtn = false;
     }
     else if (name == 'user') {
       this.coursebtn = false;
       this.homebtn = false;
       this.userbtn = true;
       this.profilebtn = false;
-      this.coursesbtn=false;
-      this.notibtn=false;
+      this.coursesbtn = false;
+      this.notibtn = false;
     }
     else if (name == 'profile') {
       this.coursebtn = false;
       this.homebtn = false;
       this.userbtn = false;
       this.profilebtn = true;
-      this.coursesbtn=false;
-      this.notibtn=false;
+      this.coursesbtn = false;
+      this.notibtn = false;
     }
     else if (name == 'name') {
       this.coursebtn = false;
       this.homebtn = false;
       this.userbtn = false;
       this.profilebtn = true;
-      this.coursesbtn=false;
-      this.notibtn=false;
+      this.coursesbtn = false;
+      this.notibtn = false;
     }
     else if (name == 'courses') {
       this.coursebtn = false;
       this.homebtn = false;
       this.userbtn = false;
       this.profilebtn = false;
-      this.coursesbtn=true;
-      this.notibtn=false;
+      this.coursesbtn = true;
+      this.notibtn = false;
     }
     else if (name == 'noti') {
       this.coursebtn = false;
       this.homebtn = false;
       this.userbtn = false;
       this.profilebtn = false;
-      this.coursesbtn=false;
-      this.notibtn=true;
+      this.coursesbtn = false;
+      this.notibtn = true;
     }
   }
 

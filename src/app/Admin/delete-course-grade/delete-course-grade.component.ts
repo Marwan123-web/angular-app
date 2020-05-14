@@ -12,6 +12,7 @@ export class DeleteCourseGradeComponent implements OnInit {
   grade: any;
   response: any;
   coursedata: any;
+  error: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router) { }
   sub: any;
@@ -22,16 +23,22 @@ export class DeleteCourseGradeComponent implements OnInit {
   deleteCourseGrade() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
+      let response = document.getElementById('response');
+      let error = document.getElementById('error');
       this.adminservices.deleteCourseGrade(this._id, this.gradetype).subscribe(res => {
         this.response = res;
-        this.adminservices.getCourseData(this._id).subscribe(res => {
-          this.coursedata = res;
-        }, err => {
-          this.coursedata = err
+        if (error.classList.contains('d-block')) {
+          error.classList.replace('d-block', 'd-none');
         }
-        );
+        response.classList.replace('d-none', 'd-block');
+        response.innerHTML = this.response.msg;
       }, err => {
-        this.response = err;
+        this.error = err.error;
+        if (response.classList.contains('d-block')) {
+          response.classList.replace('d-block', 'd-none');
+        }
+        error.classList.replace('d-none', 'd-block');
+        error.innerHTML = this.error.msg;
       }
       );
 

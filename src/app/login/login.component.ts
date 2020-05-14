@@ -3,7 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 
-
+declare var $: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   password: any;
   returnUrl: string;
   response: any;
+  error: any;
   constructor(private authservice: AuthService, private router: Router, private route: ActivatedRoute) {
     // get return url from route parameters or default to '/'
     if (this.authservice.currentUserValue) {
@@ -25,15 +26,20 @@ export class LoginComponent implements OnInit {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
   }
-
+  responseb: boolean = false;
   loginUser(idinput: HTMLInputElement, passwordinput: HTMLInputElement) {
     this.Id = idinput.value, this.password = passwordinput.value;
+    let error = document.getElementById('error');
+
     this.authservice.login(this.Id, this.password).pipe(first()).subscribe(res => {
-      this.response=res;
+      this.response = res;
       this.router.navigate([this.returnUrl]);
+
     }, err => {
-      this.response=err;
-      console.log('Fail to login');
+      this.error = err.error;
+      error.classList.replace('d-none','d-block');
+      error.innerHTML = this.error;
+
     }
     );
 

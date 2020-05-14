@@ -27,21 +27,26 @@
                     <h3 class="addUser-heading">Add/Delete User Course</h3>
                     <div class="row addUser-form">
                         <div class="col-md-12">
-                            <div class="form-group" >
+                            <div class="form-group">
                                 <select class="form-control" name="gradeType" required id="gradeType"
                                     (change)="selectChangeHandler($event)">
-                                    <option value="" disabled selected hidden>Grade Type *</option>
-                                    <option *ngFor="let course of allCourses" value="{{course.courseCode}}">{{course.courseName}}</option>
+                                    <option value="" disabled selected hidden>Select Course Name</option>
+                                    <option *ngFor="let course of allCourses" value="{{course.courseCode}}">
+                                        {{course.courseName}}</option>
                                 </select>
                             </div>
                             <input type="submit" class="btn-addUser btnRegister" value="Add Course"
-                                (click)="addUserCourse()"
-                                style="margin-top:15px!important; padding: 0!important;">
-                            <!-- 
-                            <input type="submit" class="btn-addUser btnRegister" value="Delete Course" (click)="deleteUserCourse(courseCode)"
-                                style="margin-top:15px!important;margin-right: 20px!important; padding: 0!important;"> -->
+                                (click)="addUserCourse()" style="margin-top:15px!important; padding: 0!important;">
+
+                            <input type="submit" class="btn-addUser btnRegister" value="Delete Course"
+                                (click)="deleteUserCourse()"
+                                style="margin-top:15px!important;margin-right: 20px!important; padding: 0!important;">
                         </div>
 
+                    </div>
+                    <div id="responsediv">
+                        <div class="alert alert-primary d-none" role="alert" id="response"></div>
+                        <div class="alert alert-danger d-none" role="alert" id="error"></div>
                     </div>
                 </div>
 

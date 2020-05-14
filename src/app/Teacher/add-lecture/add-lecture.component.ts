@@ -21,6 +21,8 @@ export class AddLectureComponent implements OnInit {
   lectureNumber: string;
   lectureLocation: string;
   beaconId: string;
+  response: any;
+  error: any;
 
 
   constructor(
@@ -45,18 +47,29 @@ export class AddLectureComponent implements OnInit {
     return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
   }
   AddLeacture(lectureNumber: HTMLInputElement, lectureLocation: HTMLInputElement, beaconId: HTMLInputElement) {
-    this.lectureNumber = lectureNumber.value, this.lectureLocation = lectureLocation.value, this.beaconId = beaconId.value,
-      this.teacherservices.addCourseLecture(this.currentCourse.courseCode, this.lectureNumber, this.lectureLocation, this.beaconId).subscribe(res => {
-        // console.log(this.currentCourse.courseCode)
-        console.log('Done');
-        lectureNumber.value = "";
-        lectureLocation.value = "";
-        beaconId.value = "";
-
-      }, err => {
-        console.log('Fail');
+    this.lectureNumber = lectureNumber.value, this.lectureLocation = lectureLocation.value, this.beaconId = beaconId.value;
+    let response = document.getElementById('response');
+    let error = document.getElementById('error');
+    this.teacherservices.addCourseLecture(this.currentCourse.courseCode, this.lectureNumber, this.lectureLocation, this.beaconId).subscribe(res => {
+      this.response = res;
+      if (error.classList.contains('d-block')) {
+        error.classList.replace('d-block', 'd-none');
       }
-      );
+      response.classList.replace('d-none', 'd-block');
+      response.innerHTML = this.response.msg;
+
+      lectureNumber.value = "";
+      lectureLocation.value = "";
+      beaconId.value = "";
+    }, err => {
+      this.error = err.error;
+      if (response.classList.contains('d-block')) {
+        response.classList.replace('d-block', 'd-none');
+      }
+      error.classList.replace('d-none', 'd-block');
+      error.innerHTML = this.error.msg;
+    }
+    );
   }
 
   ngOnInit(): void {

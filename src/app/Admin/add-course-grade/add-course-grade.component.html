@@ -40,6 +40,18 @@
                                 (click)="addCourseGrade(type,grade)" value="Add">
                         </div>
                     </div>
+                    <div>
+                        <div class="alert alert-primary" role="alert" *ngIf="response">
+                            {{response.msg}}
+                        </div>
+                        <div class="alert alert-danger" role="alert" *ngIf="error">
+                            {{error.msg}}
+                        </div>
+                    </div>
+                    <div id="responsediv">
+                        <div class="alert alert-primary d-none" role="alert" id="response"></div>
+                        <div class="alert alert-danger d-none" role="alert" id="error"></div>
+                    </div>
                 </div>
 
             </div>

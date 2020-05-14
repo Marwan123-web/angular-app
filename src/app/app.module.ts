@@ -65,6 +65,8 @@ import { CoursesInfoComponentt } from './Teacher/courses-info/courses-info.compo
 import { GradesComponentt } from './Teacher/grades/grades.component';
 import { AssignmentatComponentt } from './Teacher/assignmentat/assignmentat.component';
 import { AddCourseStudentGradeComponent } from './Teacher/add-student-grade/add-student-grade.component';
+import { UpdateStudentGradetComponent } from './Teacher/update-student-grade/update-student-grade.component';
+
 import { TeacherAddCourseGradeComponent } from './Teacher/add-course-grade/add-course-grade.component';
 import { TeacherDeleteCourseGradeComponent } from './Teacher/delete-course-grade/delete-course-grade.component';
 import { TeacherStudentSheetComponent } from './Teacher/student-sheet/student-sheet.component';
@@ -133,6 +135,7 @@ import { JwtInterceptor } from './_helpers';
 
 
     AddCourseStudentGradeComponent,
+    UpdateStudentGradetComponent,
     TeacherAddCourseGradeComponent,
     TeacherDeleteCourseGradeComponent,
     TeacherStudentSheetComponent,
@@ -309,7 +312,7 @@ import { JwtInterceptor } from './_helpers';
         canActivate: [AuthGuard],
       },
 
-      
+
       {
         path: 'course/attend-me', component: AttendmeComponent,
         canActivate: [AuthGuard],
@@ -358,6 +361,12 @@ import { JwtInterceptor } from './_helpers';
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
+      {
+        path: 'course/update-grade', component: UpdateStudentGradetComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
+      },
+
 
       {
         path: 'course/assignments', component: AssignmentatComponentt,
@@ -376,10 +385,17 @@ import { JwtInterceptor } from './_helpers';
       },
 
 
+      {
+        path: 'course/attendance-sheet', component: AttendanceSheetStudentComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Student] }
+      },
 
-
-      { path: 'course/attendance-sheet', component: AttendanceSheetStudentComponent },
-
+      {
+        path: 'course/students-attendance-sheet', component: AttendanceSheetStudentComponentt,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
+      },
 
       { path: 'student/notifications', component: NotificationsComponent },
       // ------------------------------------------------Teacher-----------------------------

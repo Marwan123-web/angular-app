@@ -33,6 +33,11 @@ export class TeacherServiceService {
   CourseId: any;
   myId: any;
   userProfileBody: any;
+  lectureNumber: any;
+  updateStudentGradeBody: { gradeType: any; score: any; };
+  studentIdBody: any;
+  courseIdBody: any;
+  studentIdBodyBody: any;
 
   constructor(private httpClient: HttpClient) { }
   public myCourses(id): Observable<any> {
@@ -70,7 +75,13 @@ export class TeacherServiceService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     return this.httpClient.post(`http://localhost:3000/add/student/grade/${this.addStudentGradeId}`, this.addStudentGradeBody, { headers: headers });
   }
-
+  public updateStudentGrade(courseId, studentId, gradeType, score): Observable<any> {
+    this.updateStudentGradeBody = { gradeType, score };
+    this.studentIdBody = studentId;
+    this.courseIdBody = courseId
+    let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
+    return this.httpClient.put(`http://localhost:3000/update/student/grade/${this.studentIdBody}/${this.courseIdBody}`, this.updateStudentGradeBody, { headers: headers });
+  }
 
   public getCourseGrades(courseCode, gradeType): Observable<any> {
     this.getCourseDataBody = courseCode;
@@ -134,4 +145,20 @@ export class TeacherServiceService {
     return this.httpClient.get<User>(`http://localhost:3000/course/my/attendance/${this.myId}/${this.CourseId}`);
   }
 
+  // public studentsAttendancesheet(courseCode): Observable<any> {
+  //   // this.lectureNumber = lectureNumber;
+  //   this.CourseId = courseCode;
+  //   return this.httpClient.get<User>(`http://localhost:3000/course/attendance/sheet/${this.CourseId}`);
+  // }
+  public studentsAttendancesheet(studentId, courseCode, lectureNumber): Observable<any> {
+    this.lectureNumber = lectureNumber;
+    this.CourseId = courseCode;
+    this.studentIdBodyBody = studentId;
+    return this.httpClient.get(`http://localhost:3000/course/attendance/sheet/${this.studentIdBodyBody}/${this.CourseId}/${this.lectureNumber}`);
+  }
+  public studentTotalAttendance(studentId, courseCode): Observable<any> {
+    this.CourseId = courseCode;
+    this.studentIdBodyBody = studentId;
+    return this.httpClient.get(`http://localhost:3000/course/student/total/attendance/${this.studentIdBodyBody}/${this.CourseId}`);
+  }
 }

@@ -58,15 +58,14 @@ export class GradesComponent implements OnInit {
       for (let i = 0; i < this.GradeTypeGrade.length; i++) {
         this.teacherservices.getMyCourseGrades(this.currentUser._id, this.currentCourse.courseCode, this.GradeTypeGrade[i].type).subscribe(res => {
           this.studentgrades = res[0];
-          // console.log(this.studentgrades);
+          console.log(this.studentgrades);
           if (this.studentgrades) {
             this.arrofdata.push(this.studentgrades);
 
           }
         }, err => {
           this.studentgrades = err;
-        }
-        );
+        });
 
       }
 

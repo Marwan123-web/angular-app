@@ -20,6 +20,8 @@ export class DeleteTaskComponent implements OnInit {
   coursedata: any;
   currentCourse: Course;
   taskType: string;
+  response: any;
+  error: any;
 
 
   constructor(
@@ -48,14 +50,24 @@ export class DeleteTaskComponent implements OnInit {
     this.taskType = event.target.value;
   }
   DeleteTask() {
-      this.teacherservices.deleteCourseTask(this.currentCourse.courseCode, this.taskType).subscribe(res => {
-        // console.log(this.currentCourse.courseCode)
-        location.reload();
-        console.log('Done');
-      }, err => {
-        console.log('Fail');
+    let response = document.getElementById('response');
+    let error = document.getElementById('error');
+    this.teacherservices.deleteCourseTask(this.currentCourse.courseCode, this.taskType).subscribe(res => {
+      this.response = res;
+      if (error.classList.contains('d-block')) {
+        error.classList.replace('d-block', 'd-none');
       }
-      );
+      response.classList.replace('d-none', 'd-block');
+      response.innerHTML = this.response.msg;
+    }, err => {
+      this.error = err.error;
+      if (response.classList.contains('d-block')) {
+        response.classList.replace('d-block', 'd-none');
+      }
+      error.classList.replace('d-none', 'd-block');
+      error.innerHTML = this.error.msg;
+    }
+    );
   }
 
   ngOnInit(): void {

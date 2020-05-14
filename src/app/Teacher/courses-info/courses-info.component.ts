@@ -16,6 +16,7 @@ export class CoursesInfoComponentt implements OnInit {
   _id: string;
   coursesdata: any;
   currentCourse: any;
+  numberofusers: any;
 
   constructor(
     private router: Router,
@@ -39,7 +40,12 @@ export class CoursesInfoComponentt implements OnInit {
     return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
   }
   ngOnInit(): void {
-
+    this.teacherservices.getCourseStudentsSheet(this.currentCourse.courseCode).subscribe(res => {
+      this.numberofusers = res.length;
+    }, err => {
+      this.numberofusers = err
+    }
+    );
     this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
       // console.log(this.currentCourse.courseCode)
       this.coursesdata = res;

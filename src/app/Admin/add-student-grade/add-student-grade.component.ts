@@ -14,6 +14,8 @@ export class AddStudentGradeComponent implements OnInit {
   gradeType: any;
   studentId: any;
   score: any;
+  response: any;
+  error: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router) { }
   sub: any;
@@ -26,20 +28,28 @@ export class AddStudentGradeComponent implements OnInit {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
       this.studentId = studentId.value, this.score = score.value;
-
+      let response = document.getElementById('response');
+      let error = document.getElementById('error');
       this.adminservices.addStudentGrade(this._id, this.studentId, this.gradeType, this.score).subscribe(res => {
-        this.coursedata = res;
-        this.adminservices.getCourseData(this._id).subscribe(res => {
-          this.coursedata = res;
-        }, err => {
-          this.coursedata = err
+        this.response = res;
+        if (error.classList.contains('d-block')) {
+          error.classList.replace('d-block', 'd-none');
         }
-        );
+        response.classList.replace('d-none', 'd-block');
+        response.innerHTML = this.response.msg;
+
+        studentId.value = "";
+        score.value = "";
       }, err => {
-        this.coursedata = err
-      });
-      studentId.value = "";
-      score.value = "";
+        this.error = err.error;
+        if (response.classList.contains('d-block')) {
+          response.classList.replace('d-block', 'd-none');
+        }
+        error.classList.replace('d-none', 'd-block');
+        error.innerHTML = this.error.msg;
+      }
+      );
+
     });
   };
   ngOnInit(): void {

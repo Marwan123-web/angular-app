@@ -36,9 +36,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let grades of courseStudentsGrades ; let i = index">
-                            <th>{{i}}</th>
-                            <th scope="row"><a [routerLink]="['/user/profile', grades._id]">{{grades.studentId}}</a>
+                        <tr *ngFor="let grades of courseStudentsGrades ; index as i">
+                            <th>{{i+1}}</th>
+                            <th scope="row"><a [routerLink]="['/user/profile', grades.studentId]">{{grades.studentId}}</a>
                             </th>
                             <td>{{grades.score}}</td>
 

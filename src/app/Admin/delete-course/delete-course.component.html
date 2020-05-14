@@ -27,12 +27,17 @@
                     <div class="row addUser-form">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="text" min="20201800" class="form-control" placeholder="ID *"#courseCode value="">
+                                <input type="text" min="20201800" class="form-control" placeholder="Course Code *"
+                                    #courseCode value="">
                             </div>
-                            <input type="submit" class="btn-addUser btnRegister" value="Delete" (click)="deleteCourse(courseCode)"
-                                style="padding: 0!important;">
+                            <input type="submit" class="btn-addUser btnRegister" value="Delete"
+                                (click)="deleteCourse(courseCode)" style="padding: 0!important;">
                         </div>
 
+                    </div>
+                    <div id="responsediv">
+                        <div class="alert alert-primary d-none" role="alert" id="response"></div>
+                        <div class="alert alert-danger d-none" role="alert" id="error"></div>
                     </div>
                 </div>
 

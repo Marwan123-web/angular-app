@@ -48,6 +48,14 @@
                                         <p>{{coursedata.creaditHours}}</p>
                                     </td>
                                 </tr>
+                                <tr *ngIf="numberofusers">
+                                    <td>
+                                        <p style="font-weight: bold;">Number Of Students:</p>
+                                    </td>
+                                    <td>
+                                        <p>{{numberofusers}}</p>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>
                                         <p style="font-weight: bold;">Course Grades</p>

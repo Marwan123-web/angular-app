@@ -22,26 +22,36 @@
 
             <div class="col-md-9 addUser" data-aos="fade-left">
 
-                <!-- Delete User -->
-                <div class="tab-pane fade show" id="deleteUser" role="tabpanel" aria-labelledby="deleteUser-tab">
-                    <h3 class="addUser-heading">Delete User</h3>
+                <!-- User Grade -->
+                <div class="tab-pane fade show active" id="userGrade" role="tabpanel" aria-labelledby="userGrade-tab">
+                    <h3 class="addUser-heading">Update User Grade</h3>
                     <div class="row addUser-form">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="number" min="20201800" class="form-control" placeholder="ID *" #id
+                                <input type="number" min="20201800" class="form-control" placeholder="Student ID *"
+                                    #studentId value="">
+                            </div>
+                            <div class="form-group" *ngIf="coursedata">
+                                <select class="form-control" name="gradeType" required id="gradeType"
+                                    (change)="selectChangeHandler($event)">
+                                    <option value="" disabled selected hidden>Grade Type *</option>
+                                    <option *ngFor="let grade of coursedata.grades">{{grade.type}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" min="0" max="100" class="form-control" placeholder="Score *" #score
                                     value="">
                             </div>
-                            <input type="submit" class="btn-addUser btnRegister" value="Delete" (click)="deleteUser(id)"
-                                style="padding: 0!important;">
+                            <input type="submit" class="btn-addUser btnRegister"
+                                style="margin-top: 5%!important; padding: 0!important;" value="Update"
+                                (click)="updateStudentGradefun(studentId,score)">
                         </div>
-
                     </div>
                     <div id="responsediv">
                         <div class="alert alert-primary d-none" role="alert" id="response"></div>
                         <div class="alert alert-danger d-none" role="alert" id="error"></div>
                     </div>
                 </div>
-
 
             </div>
         </div>

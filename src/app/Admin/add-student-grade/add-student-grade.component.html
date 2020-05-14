@@ -34,7 +34,7 @@
                             <div class="form-group" *ngIf="coursedata">
                                 <select class="form-control" name="gradeType" required id="gradeType"
                                     (change)="selectChangeHandler($event)">
-                                    <option value="" disabled selected hidden>Grade Type *</option>
+                                    <option value="" disabled selected hidden>Grade Type</option>
                                     <option *ngFor="let grade of coursedata.grades">{{grade.type}}</option>
                                 </select>
                             </div>
@@ -47,6 +47,10 @@
                                 (click)="addStudentGrade(studentId,score)" value="Add">
                         </div>
 
+                    </div>
+                    <div id="responsediv">
+                        <div class="alert alert-primary d-none" role="alert" id="response"></div>
+                        <div class="alert alert-danger d-none" role="alert" id="error"></div>
                     </div>
                 </div>
 

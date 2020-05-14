@@ -1,6 +1,3 @@
-
-
-
 <!-- ======= Main Section ======= -->
 <section class="main-section" id="main">
 
@@ -35,11 +32,15 @@
                                     value="">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" #taskPath placeholder="Path *"
-                                    value="">
+                                <input type="text" class="form-control" #taskPath placeholder="Path *" value="">
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block btn-lg" (click)="AddTask(taskType,taskPath)">Add Task</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-lg"
+                                (click)="AddTask(taskType,taskPath)">Add Task</button>
                         </div>
+                    </div>
+                    <div id="responsediv">
+                        <div class="alert alert-primary d-none" role="alert" id="response"></div>
+                        <div class="alert alert-danger d-none" role="alert" id="error"></div>
                     </div>
                 </div>
 
@@ -49,5 +50,3 @@
 
 
 </section>
-
-
