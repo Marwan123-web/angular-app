@@ -40,6 +40,10 @@ export class AdminservicesService {
   updateCourseIdBody: any;
   studentIdBody: any;
   courseIdBody: any;
+  lectureNumber: any;
+  CourseId: any;
+  studentIdBodyBody: any;
+  gradeType: any;
 
   constructor(private httpClient: HttpClient) { }
   public profile(id): Observable<any> {
@@ -184,4 +188,33 @@ export class AdminservicesService {
   //   this.getStudentGradeGradeType = gradeType;
   //   return this.httpClient.get(`http://localhost:3000/course/students/grades/${this.getStudentGradeCourseCode}/${this.getStudentGradeGradeType}`)
   // }
+  public studentsAttendancesheet(studentId, courseCode, lectureNumber): Observable<any> {
+    this.lectureNumber = lectureNumber;
+    this.CourseId = courseCode;
+    this.studentIdBodyBody = studentId;
+    return this.httpClient.get(`http://localhost:3000/course/attendance/sheet/${this.studentIdBodyBody}/${this.CourseId}/${this.lectureNumber}`);
+  }
+  public studentTotalAttendance(studentId, courseCode): Observable<any> {
+    this.CourseId = courseCode;
+    this.studentIdBodyBody = studentId;
+    return this.httpClient.get(`http://localhost:3000/course/student/total/attendance/${this.studentIdBodyBody}/${this.CourseId}`);
+  }
+
+
+
+  public studentsGradesheet(studentId, courseCode, gradeType): Observable<any> {
+    this.gradeType = gradeType;
+    this.CourseId = courseCode;
+    this.studentIdBodyBody = studentId;
+    return this.httpClient.get(`http://localhost:3000/course/grade/sheet/${this.studentIdBodyBody}/${this.CourseId}/${this.gradeType}`);
+  }
+  public studentTotalGrades(studentId, courseCode): Observable<any> {
+    this.CourseId = courseCode;
+    this.studentIdBodyBody = studentId;
+    return this.httpClient.get(`http://localhost:3000/course/student/total/grade/${this.studentIdBodyBody}/${this.CourseId}`);
+  }
+  public totalCourseGrades(courseCode): Observable<any> {
+    this.CourseId = courseCode;
+    return this.httpClient.get(`http://localhost:3000/course/total/grades/${this.CourseId}`);
+  }
 }

@@ -16,7 +16,7 @@ export class GradesComponentt implements OnInit {
 
   currentUser: User;
 
-  _id: string;
+  // _id: string;
   currentCourse: any;
   courseStudentsGrades: any;
   GradeTypeGrade: any;
@@ -24,6 +24,16 @@ export class GradesComponentt implements OnInit {
   courseGradeData: any;
   courseGrades: any;
   x: any;
+  things: any[][];
+  coursedata: any;
+  useragrade: any;
+  courseusers: any;
+  userdata: any;
+  usertotalgrades: any;
+  arrayofusersdata: Array<object> = [];
+  usertotalgradestotal: Array<object> = [];
+  fakedata: any;
+  courseTotalGrades: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
@@ -34,6 +44,8 @@ export class GradesComponentt implements OnInit {
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.currentCourse = this.courseService.currentCourseValue;
+    this.things = [];
+
   }
   get isStudent() {
     return this.currentUser && this.currentUser.role === Role.Student;
@@ -46,40 +58,58 @@ export class GradesComponentt implements OnInit {
     return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
   }
 
-  selectChangeHandler(event: any) {
-    //update the ui
-    this.gradetype = event.target.value;
-    this.teacherservices.getCourseStudentsGrades(this.currentCourse.courseCode, this.gradetype).subscribe(res => {
-      this.courseStudentsGrades = res;
-    }, err => {
-      this.courseStudentsGrades = err;
-    });
 
-    this.teacherservices.getCourseGrades(this.currentCourse.courseCode, this.gradetype).subscribe(res => {
-      this.GradeTypeGrade = res;
+  getcoursedata(x, y) {
+
+    this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
+      this.coursedata = res.grades
+      
+      // this.courseTotalGrades = this.coursedata.length;
+      for (let i = 0; i < this.coursedata.length; i++) {
+        this.teacherservices.studentsGradesheet(x, this.currentCourse.courseCode, this.coursedata[i].type).subscribe(res => {
+          // this.fakedata = { "_id": "5eba5bb7900576e5c44f34b2", "studentId": x, "courseId": this.currentCourse.courseCode, "gradeType": this.coursedata[i].type, "score": 100, "__v": 0 }
+          this.useragrade = res;
+          this.things[y][i] = this.useragrade;
+
+        }, err => {
+          this.useragrade = err
+        });
+
+      }
     }, err => {
-      this.GradeTypeGrade = err;
+      this.coursedata = err
     });
   }
   ngOnInit(): void {
 
-    this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
-      this.courseGradeData = res;
-      this.x = this.courseGradeData.grades[0].type;
-      if (this.x ) {
-        this.teacherservices.getCourseGrades(this.currentCourse.courseCode, this.x).subscribe(res => {
-          this.GradeTypeGrade = res;
-          this.teacherservices.getCourseStudentsGrades(this.currentCourse.courseCode, this.x).subscribe(res => {
-            this.courseStudentsGrades = res;
+    this.teacherservices.totalCourseGrades(this.currentCourse.courseCode).subscribe(res => {
+      this.courseTotalGrades = res
+    }, err => {
+      this.courseTotalGrades = err
+    });
+    this.teacherservices.getCourseStudentsSheet(this.currentCourse.courseCode).subscribe(res => {
+      this.courseusers = res;
+      for (let y = 0; y < this.courseusers.length; y++) {
+        this.teacherservices.profile(this.courseusers[y]._id).subscribe(res => {
+          this.userdata = res
+
+          this.teacherservices.studentTotalGrades(this.courseusers[y]._id, this.currentCourse.courseCode).subscribe(res => {
+            this.usertotalgrades = res
+            this.usertotalgradestotal[y] = this.usertotalgrades;
           }, err => {
-            this.courseStudentsGrades = err;
+            this.usertotalgrades = err
           });
+
+          this.arrayofusersdata[y] = this.userdata;
+          this.things[y] = [];
+          this.getcoursedata(this.userdata._id, y);
         }, err => {
-          this.GradeTypeGrade = err;
+          this.userdata = err
         });
+
       }
     }, err => {
-      this.courseGradeData = err;
+      this.courseusers = err;
     });
 
 

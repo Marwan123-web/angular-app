@@ -38,6 +38,7 @@ export class TeacherServiceService {
   studentIdBody: any;
   courseIdBody: any;
   studentIdBodyBody: any;
+  gradeType: any;
 
   constructor(private httpClient: HttpClient) { }
   public myCourses(id): Observable<any> {
@@ -160,5 +161,23 @@ export class TeacherServiceService {
     this.CourseId = courseCode;
     this.studentIdBodyBody = studentId;
     return this.httpClient.get(`http://localhost:3000/course/student/total/attendance/${this.studentIdBodyBody}/${this.CourseId}`);
+  }
+
+
+
+  public studentsGradesheet(studentId, courseCode, gradeType): Observable<any> {
+    this.gradeType = gradeType;
+    this.CourseId = courseCode;
+    this.studentIdBodyBody = studentId;
+    return this.httpClient.get(`http://localhost:3000/course/grade/sheet/${this.studentIdBodyBody}/${this.CourseId}/${this.gradeType}`);
+  }
+  public studentTotalGrades(studentId, courseCode): Observable<any> {
+    this.CourseId = courseCode;
+    this.studentIdBodyBody = studentId;
+    return this.httpClient.get(`http://localhost:3000/course/student/total/grade/${this.studentIdBodyBody}/${this.CourseId}`);
+  }
+  public totalCourseGrades(courseCode): Observable<any> {
+    this.CourseId = courseCode;
+    return this.httpClient.get(`http://localhost:3000/course/total/grades/${this.CourseId}`);
   }
 }

@@ -17,47 +17,28 @@
     </div>
 
     <div class="container">
-        <div class="row row3 align-items-center">
-            <div class="table-wrapper">
-                <div class="form-group" *ngIf="courseGradeData">
-                    <select class="form-control" name="gradeType" required id="gradeType"
-                        (change)="selectChangeHandler($event)">
-                        <option disabled selected hidden>Grade Type *</option>
-                        <option *ngFor="let grade of courseGradeData.grades">{{grade.type}}</option>
-                    </select>
-                </div>
-                <table class="table grades-table" style="color: white;">
-                    <thead>
-                        <tr *ngIf="GradeTypeGrade">
-                            <th scope="col">Index</th>
-                            <th scope="col">Student ID</th>
-                            <th scope="col" *ngFor="let grade of GradeTypeGrade.grades">{{grade.type}}
-                                <span>({{grade.grade}})</span> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let grades of courseStudentsGrades ; let i = index">
-                            <th>{{i+1}}</th>
-                            <th scope="row"><a [routerLink]="['/user/profile', grades._id]">{{grades.studentId}}</a>
-                            </th>
-                            <td>{{grades.score}}</td>
+        <div class="row align-items-center ">
+            <table class="table attendance-table top" style="color: white;">
+                <thead>
+                    <tr *ngIf="coursedata">
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col" *ngFor="let grades of coursedata">{{grades.type}}({{grades.grade}})</th>
+                        <th scope="col" *ngIf="courseTotalGrades">Total({{courseTotalGrades.totalGrades}})
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let userdata of usertotalgradestotal;index as i;">
+                        <th scope="row">{{userdata.user._id}}</th>
+                        <td>{{userdata.user.name}}</td>
+                        <td *ngFor="let fdata of things[i]">{{fdata.score}}</td>
+                        <th scope="row">{{userdata.totalGrades.totalGrades}}</th>
 
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-                <br>
-                <br>
-                <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in"
-                    *ngIf="courseGradeData" [routerLink]="['/course/add-grade']" value="students-sheet">Add Grade
-                </button>
-                <button type="button" class="attend-btn courseInfo-btn hvr-rectangle-in" *ngIf="courseGradeData"
-                    [routerLink]="['/course/update-grade']" value="students-sheet">Update
-                    Grade
-                </button>
-            </div>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
     </div>
 
 </section>

@@ -16,8 +16,7 @@ export class AttendanceSheetStudentComponentt implements OnInit {
   currentCourse: Course;
   coursedata: any;
   courseusers: any;
-  arrayofusers: Array<any> = [];
-  studentattendance: any;
+
 
   arrayofuserdata: Array<any> = [];
   arrayofstudentattendance: Array<any> = [];
@@ -29,7 +28,7 @@ export class AttendanceSheetStudentComponentt implements OnInit {
   arrayofusersdata: Array<any> = [];
   attendata: any;
   userdata: any;
-  aaaa: any;
+
   arrofdata: any;
   userattendance: any;
 
@@ -92,22 +91,15 @@ export class AttendanceSheetStudentComponentt implements OnInit {
           this.teacherservices.studentTotalAttendance(this.courseusers[y]._id, this.currentCourse.courseCode).subscribe(res => {
             this.usertotalattendance = res
             this.usertotalattendancetotal[y] = this.usertotalattendance;
-            console.log(this.usertotalattendancetotal)
           }, err => {
             this.usertotalattendance = err
           });
-
           this.arrayofusersdata[y] = this.userdata;
-          console.log(this.arrayofusersdata)
-
           this.things[y] = [];
           this.getcoursedata(this.arrayofusersdata[y]._id, y);
         }, err => {
           this.userdata = err
         });
-
-
-
 
       }
     }, err => {
