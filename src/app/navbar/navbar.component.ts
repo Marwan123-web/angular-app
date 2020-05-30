@@ -53,6 +53,12 @@ export class NavbarComponent implements OnInit {
       this.username = 'Username';
     }
 
+ 
+
+
+
+
+
   }
   homebtn: boolean = true;
   coursebtn: boolean = false;

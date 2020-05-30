@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+
   }
-  responseb: boolean = false;
   loginUser(idinput: HTMLInputElement, passwordinput: HTMLInputElement) {
     this.Id = idinput.value, this.password = passwordinput.value;
     let error = document.getElementById('error');
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
     }, err => {
       this.error = err.error;
-      error.classList.replace('d-none','d-block');
+      error.classList.replace('d-none', 'd-block');
       error.innerHTML = this.error;
 
     }

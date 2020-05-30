@@ -45,22 +45,21 @@ import { NavbarComponent } from './navbar/navbar.component';
 
 import { CoursesComponents } from './Student/courses/courses.component';
 
-import { AttendanceComponent } from './Student/attendance/attendance.component';
+
 import { NotificationsComponent } from './Student/notifications/notifications.component';
 import { CoursesSingleComponent } from './Student/courses-single/courses-single.component';
-import { CoursesInfoComponent } from './Student/courses-info/courses-info.component';
+
 import { GradesComponent } from './Student/grades/grades.component';
-import { AssignmentatComponent } from './Student/assignmentat/assignmentat.component';
 
 import { AttendanceSheetStudentComponent } from './Student/attendance-sheet-student/attendance-sheet-student.component';
 
 
 
-import { CoursesComponentt } from './Teacher/courses/courses.component';
+
 
 import { AttendanceComponentt } from './Teacher/attendance/attendance.component';
-import { NotificationsComponentt } from './Teacher/notifications/notifications.component';
-import { CoursesSingleComponentt } from './Teacher/courses-single/courses-single.component';
+
+
 import { CoursesInfoComponentt } from './Teacher/courses-info/courses-info.component';
 import { GradesComponentt } from './Teacher/grades/grades.component';
 import { AssignmentatComponentt } from './Teacher/assignmentat/assignmentat.component';
@@ -125,12 +124,9 @@ import { JwtInterceptor } from './_helpers';
 
     CoursesComponents,
 
-    AttendanceComponent,
     NotificationsComponent,
     CoursesSingleComponent,
-    CoursesInfoComponent,
     GradesComponent,
-    AssignmentatComponent,
     AttendanceSheetStudentComponent,
 
 
@@ -145,11 +141,8 @@ import { JwtInterceptor } from './_helpers';
 
 
 
-    CoursesComponentt,
 
     AttendanceComponentt,
-    NotificationsComponentt,
-    CoursesSingleComponentt,
     CoursesInfoComponentt,
     GradesComponentt,
     AssignmentatComponentt,
@@ -397,7 +390,7 @@ import { JwtInterceptor } from './_helpers';
         data: { roles: [Role.Teacher] }
       },
 
-      { path: 'student/notifications', component: NotificationsComponent },
+      { path: 'notifications', component: NotificationsComponent },
       // ------------------------------------------------Teacher-----------------------------
 
 

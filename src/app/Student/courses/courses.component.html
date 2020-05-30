@@ -24,7 +24,7 @@
             </div>
             <div class="row align-items-stretch" data-aos="fade-up">
 
-                <div class="col-lg-4 mb-4 mb-lg-0" *ngFor='let course of usercoursesdata'>
+                <div class="col-lg-4 mb-4 mb-lg-0" *ngFor='let course of usercoursesdata'(focus)="closCourse()">
                     <div class="courses h-100 text-center">
                         <span class="department">{{course.courseDepartment}}</span>
                         <h3>{{course.courseName}}</h3>

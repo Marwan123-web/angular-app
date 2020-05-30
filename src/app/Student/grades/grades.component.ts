@@ -20,6 +20,8 @@ export class GradesComponent implements OnInit {
   arrofdata: Array<any> = [];
   x: any;
   mydata: any;
+  courseTotalGrades: any;
+  usertotalgrades: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
@@ -47,18 +49,32 @@ export class GradesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.teacherservices.totalCourseGrades(this.currentCourse.courseCode).subscribe(res => {
+      this.courseTotalGrades = res
+      console.log(this.courseTotalGrades)
+
+    }, err => {
+      this.courseTotalGrades = err
+    });
+
+    this.teacherservices.studentTotalGrades(this.currentUser._id, this.currentCourse.courseCode).subscribe(res => {
+      this.usertotalgrades = res
+      console.log(this.usertotalgrades)
+    }, err => {
+      this.usertotalgrades = err
+    });
+
     this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
       // console.log(this.currentCourse.courseCode)
       this.GradeTypeGrade = res.grades;
-      this.teacherservices.profile(this.currentUser._id).subscribe(res => {
-        this.mydata = res
-      }, err => {
-        this.mydata = err;
-      });
+      // this.teacherservices.profile(this.currentUser._id).subscribe(res => {
+      //   this.mydata = res
+      // }, err => {
+      //   this.mydata = err;
+      // });
       for (let i = 0; i < this.GradeTypeGrade.length; i++) {
         this.teacherservices.getMyCourseGrades(this.currentUser._id, this.currentCourse.courseCode, this.GradeTypeGrade[i].type).subscribe(res => {
           this.studentgrades = res[0];
-          console.log(this.studentgrades);
           if (this.studentgrades) {
             this.arrofdata.push(this.studentgrades);
 

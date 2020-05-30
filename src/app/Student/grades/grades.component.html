@@ -24,16 +24,17 @@
                         <th scope="col">Name</th>
                         <th scope="col" *ngFor="let grade of GradeTypeGrade">{{grade.type}}
                             <span>({{grade.grade}})</span> </th>
-
+                        <th scope="col" *ngIf="courseTotalGrades">Total({{courseTotalGrades.totalGrades}})
+                        </th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row" *ngIf="mydata">{{mydata._id}}</th>
-                        <th scope="row" *ngIf="mydata">{{mydata.name}}</th>
+                    <tr *ngIf="usertotalgrades">
+                        <th scope="row" >{{usertotalgrades.user._id}}</th>
+                        <th scope="row" >{{usertotalgrades.user.name}}</th>
                         <td *ngFor="let grade of arrofdata">{{grade.score}}</td>
-
+                        <th scope="row" >{{usertotalgrades.totalGrades.totalGrades}}</th>
 
                     </tr>
                 </tbody>

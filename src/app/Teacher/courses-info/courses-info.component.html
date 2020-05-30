@@ -45,11 +45,11 @@
                                 <p>{{coursesdata.creaditHours}}</p>
                             </td>
                         </tr>
-                        <tr *ngIf="numberofusers">
+                        <tr *ngIf="isTeacher" >
                             <td>
                                 <p style="font-weight: bold;">Number Of Students:</p>
                             </td>
-                            <td>
+                            <td *ngIf="numberofusers">
                                 <p>{{numberofusers}}</p>
                             </td>
                         </tr>

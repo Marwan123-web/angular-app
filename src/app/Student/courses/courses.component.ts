@@ -6,11 +6,13 @@ import { User } from '../../_models';
 import { Course } from '../../_models/course';
 import { first } from 'rxjs/operators';
 import { CourseService } from 'src/app/services/course.service';
+declare var $: any;
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css']
 })
+
 export class CoursesComponents implements OnInit {
   _id: any;
   userdata: any;
@@ -19,7 +21,7 @@ export class CoursesComponents implements OnInit {
   currentCourse: Course;
 
   constructor(private teacherservices: TeacherServiceService, private _Activatedroute: ActivatedRoute,
-    private _router: Router, private authenticationService: AuthService,private courseService: CourseService, ) {
+    private _router: Router, private authenticationService: AuthService, private courseService: CourseService, ) {
     this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
 
@@ -31,10 +33,18 @@ export class CoursesComponents implements OnInit {
       this.usercoursesdata = err
     }
     );
+
+
+
+  }
+  closCourse() {
     this.courseService.closeCourse();
-  }  
+    console.log(this.currentCourse.courseCode)
+  }
   openCourse(courseCode) {
-    this.courseService.getCourse(courseCode).pipe(first()).subscribe(res => { 
+    console.log(courseCode)
+
+    this.courseService.getCourse(courseCode).pipe(first()).subscribe(res => {
     }, err => {
       console.log('Fail to get Course');
     }

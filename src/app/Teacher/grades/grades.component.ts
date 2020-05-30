@@ -4,6 +4,7 @@ import { User, Role } from '../../_models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-grades',
@@ -34,6 +35,7 @@ export class GradesComponentt implements OnInit {
   usertotalgradestotal: Array<object> = [];
   fakedata: any;
   courseTotalGrades: any;
+  coursegrades: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
@@ -62,12 +64,10 @@ export class GradesComponentt implements OnInit {
   getcoursedata(x, y) {
 
     this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
-      this.coursedata = res.grades
-      
-      // this.courseTotalGrades = this.coursedata.length;
-      for (let i = 0; i < this.coursedata.length; i++) {
-        this.teacherservices.studentsGradesheet(x, this.currentCourse.courseCode, this.coursedata[i].type).subscribe(res => {
-          // this.fakedata = { "_id": "5eba5bb7900576e5c44f34b2", "studentId": x, "courseId": this.currentCourse.courseCode, "gradeType": this.coursedata[i].type, "score": 100, "__v": 0 }
+      this.coursedata=res;
+      this.coursegrades = res.grades
+      for (let i = 0; i < this.coursegrades.length; i++) {
+        this.teacherservices.studentsGradesheet(x, this.currentCourse.courseCode, this.coursegrades[i].type).subscribe(res => {
           this.useragrade = res;
           this.things[y][i] = this.useragrade;
 
@@ -77,7 +77,7 @@ export class GradesComponentt implements OnInit {
 
       }
     }, err => {
-      this.coursedata = err
+      this.coursegrades = err
     });
   }
   ngOnInit(): void {

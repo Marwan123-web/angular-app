@@ -40,7 +40,13 @@ export class AttendanceComponentt implements OnInit {
     return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
   }
   ngOnInit(): void {
-
+    this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
+      // console.log(this.currentCourse.courseCode)
+      this.coursesdata = res;
+    }, err => {
+      this.coursesdata = err
+    }
+    );
 
   }
 
