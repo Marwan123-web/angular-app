@@ -16,37 +16,67 @@
             <div class="row align-items-center">
 
                 <div class="col-6 col-lg-2">
-                    <h1 class="mb-0 site-logo"><a routerLink="/" class="mb-0">SMART ATTENDANCE</a></h1>
+                    <h1 class="mb-0 site-logo"><a routerLink="/home" class="mb-0">SMART ATTENDANCE</a></h1>
                 </div>
 
-                <div class="col-12 col-md-10 d-none d-lg-block">
-                    <nav class="site-navigation position-relative text-right" role="navigation">
+                <div class="col-12 col-md-10  d-lg-block">
+                    <!-- <nav class="site-navigation position-relative text-right" role="navigation">
 
-                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                            <li><a routerLink="/" (click)="activebtn('home')" name='home' [class.active]='homebtn==true'
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block nav">
+                            <li><a routerLink="/" (click)="activebtn('home')" name='home' [class.active]='homebtn'
                                     class="nav-link">Home</a></li>
                             <li><a routerLink="/courses" *ngIf="isAdmin" (click)="activebtn('course')" name='course'
-                                    [class.active]='coursebtn==true' class="nav-link">Courses</a></li>
+                                    [class.active]='coursebtn' class="nav-link">Courses</a></li>
                             <li><a routerLink="/users" *ngIf="isAdmin" (click)="activebtn('user')" name='user'
-                                    [class.active]='userbtn==true' class="nav-link">Users</a></li>
+                                    [class.active]='userbtn' class="nav-link">Users</a></li>
 
                             <li><a routerLink='/mycourses' *ngIf="isTeacherOrStudent" (click)="activebtn('courses')"
-                                    name='courses' [class.active]='coursesbtn==true' class="nav-link">Courses</a></li>
+                                    name='courses' [class.active]='coursesbtn' class="nav-link">Courses</a></li>
                             <li><a routerLink='/notifications' (click)="activebtn('noti')" name='noti'
-                                    [class.active]='notibtn==true' *ngIf="isTeacherOrStudent"
+                                    [class.active]='notibtn' *ngIf="isTeacherOrStudent"
                                     class="nav-link">Notifications</a></li>
 
                             <li class="has-children">
                                 <a routerLink="/profile" class="nav-link" (click)="activebtn('profile')" name='profile'
-                                    *ngIf="username" [class.active]='profilebtn==true'>{{currentUser.name}}</a>
-                                <ul class="dropdown">
+                                    *ngIf="username" [class.active]='profilebtn'>{{currentUser.name}}</a>
+                                <ul class="dropdown nav">
                                     <li><a routerLink="/profile" (click)="activebtn('name')" name="name"
-                                            [class.active]='profilebtn==true' class="nav-link">Profile</a></li>
+                                            [class.active]='profilebtn' class="nav-link">Profile</a></li>
+                                    <li><a (click)="logout()" class="nav-link">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav> -->
+
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block nav">
+                            <li [class.active]="router.url==='/home'"><a routerLink="/" name='home' id="home"
+                                    class="nav-link">Home</a></li>
+                            <li [class.active]="router.url==='/courses'"><a routerLink="/courses" *ngIf="isAdmin"
+                                    name='course' id="course" class="nav-link">Courses</a></li>
+                            <li [class.active]="router.url==='/users'"><a routerLink="/users" *ngIf="isAdmin"
+                                    name='user' id="users" class="nav-link">Users</a>
+                            </li>
+
+                            <li [class.active]="router.url==='/mycourses'"><a routerLink='/mycourses'
+                                    *ngIf="isTeacherOrStudent" name='courses' id="courses" class="nav-link">Courses</a>
+                            </li>
+                            <li [class.active]="router.url==='/notifications'"><a routerLink='/notifications'
+                                    name='noti' id="noti" *ngIf="isTeacherOrStudent" class="nav-link">Notifications</a>
+                            </li>
+
+                            <li class="has-children" [class.active]="router.url==='/profile'">
+                                <a routerLink="/profile" class="nav-link" name='profile' id="profile"
+                                    *ngIf="username">{{currentUser.name}}</a>
+                                <ul class="dropdown nav">
+                                    <li><a routerLink="/profile" name="name" id="name" class="nav-link">Profile</a></li>
                                     <li><a (click)="logout()" class="nav-link">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </nav>
+
                 </div>
 
                 <div class="col-6 d-inline-block d-lg-none ml-md-0 py-3" style="position: relative; top: 3px;">
@@ -61,7 +91,6 @@
         </div>
 
     </header>
-
 
 
 

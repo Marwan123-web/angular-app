@@ -44,7 +44,6 @@ export class CoursesSingleComponent implements OnInit {
   ngOnInit(): void {
 
     this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
-      // console.log(this.currentCourse.courseCode)
       this.coursesdata = res;
     }, err => {
       this.coursesdata = err

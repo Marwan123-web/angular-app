@@ -52,7 +52,6 @@ export class TeacherServiceService {
   public addCourseGrade(courseCode, type, grade): Observable<any> {
     this.addCourseGradeBody = { type, grade };
     this.addCourseGradeId = courseCode;
-    console.log(this.addCourseGradeId);
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     return this.httpClient.post(`http://localhost:3000/add/course/grade/${this.addCourseGradeId}`, this.addCourseGradeBody, { headers: headers });
   }
@@ -98,7 +97,6 @@ export class TeacherServiceService {
   }
 
   public deleteCourseTask(courseCode, type): Observable<any> {
-    console.log(type)
     this.deleteCourseTaskBody = type;
     this.deleteCourseTaskId = courseCode;
     return this.httpClient.delete(`http://localhost:3000/delete/course/task/${this.deleteCourseTaskId}/${this.deleteCourseTaskBody}`);
@@ -179,5 +177,15 @@ export class TeacherServiceService {
   public totalCourseGrades(courseCode): Observable<any> {
     this.CourseId = courseCode;
     return this.httpClient.get(`http://localhost:3000/course/total/grades/${this.CourseId}`);
+  }
+
+  public attendanceReport(courseCode): Observable<any> {
+    this.CourseId = courseCode;
+    return this.httpClient.get(`http://localhost:3000/course/attendance/report/${this.CourseId}`);
+  }
+
+  public gradesReport(courseCode): Observable<any> {
+    this.CourseId = courseCode;
+    return this.httpClient.get(`http://localhost:3000/course/grades-report/${this.CourseId}`);
   }
 }

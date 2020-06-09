@@ -18,7 +18,7 @@
 
     <div class="container">
         <div class="row align-items-center ">
-            
+
             <table class="table attendance-table top" style="color: white;">
                 <thead>
                     <tr *ngIf="coursegrades">
@@ -42,15 +42,15 @@
             <br>
             <br>
             <br>
-            <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in"
-                *ngIf="coursedata" [routerLink]="['/course/add-grade']"
-                value="students-sheet">Add Grade
+            <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in" *ngIf="coursedata"
+                [routerLink]="['/course/add-grade']" value="students-sheet">Add Grade
             </button>
             <button type="button" class="attend-btn courseInfo-btn hvr-rectangle-in" *ngIf="coursedata"
-                [routerLink]="['/course/update-grade']"
-                value="students-sheet">Update
+                [routerLink]="['/course/update-grade']" value="students-sheet">Update
                 Grade
             </button>
+            <button type="button" class="attend-btn courseInfo-btn btn-primary hvr-rectangle-in" *ngIf="isTeacher"
+                [routerLink]="['/course/students-grades-report']">Grades Report</button>
         </div>
     </div>
 

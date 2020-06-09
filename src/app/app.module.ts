@@ -75,7 +75,7 @@ import { AddLectureComponent } from './Teacher/add-lecture/add-lecture.component
 import { AddAttendanceComponent } from './Teacher/add-attendance/add-attendance.component';
 
 
-import { AttendmeComponent } from './Teacher/attendme/attendme.component';
+import { AttendmeComponent } from './Student/attendme/attendme.component';
 
 
 
@@ -85,6 +85,8 @@ import { DeleteTaskComponent } from './Teacher/delete-task/delete-task.component
 import { LoginComponent } from './login/login.component';
 import { from } from 'rxjs';
 import { JwtInterceptor } from './_helpers';
+import { AttendanceReportComponent } from './Teacher/attendance-report/attendance-report.component';
+import { GradesReportComponent } from './Teacher/grades-report/grades-report.component';
 
 
 @NgModule({
@@ -151,29 +153,32 @@ import { JwtInterceptor } from './_helpers';
     DeleteTaskComponent,
     LoginComponent,
     AttendmeComponent,
+    AttendanceReportComponent,
+    GradesReportComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: '/home', pathMatch: 'full' },
+      // { path: '', redirectTo: '/home', pathMatch: 'full' },
 
 
       {
         path: 'home', component: HomeComponent,
         canActivate: [AuthGuard],
-
+        data: { roles: [Role.Admin, Role.Teacher, Role.Student] }
       },
 
       { path: 'login', component: LoginComponent },
 
-      // { path: '**', redirectTo: '' },
+
 
 
       {
         path: 'profile', component: ProfileComponent,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Admin, Role.Teacher, Role.Student] }
 
       },
 
@@ -294,48 +299,58 @@ import { JwtInterceptor } from './_helpers';
       {
         path: 'mycourses', component: CoursesComponents,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher, Role.Student] }
       },
       {
         path: 'course/home', component: CoursesSingleComponent,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher, Role.Student] }
       },
 
       {
         path: 'course/attendance', component: AttendanceComponentt,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher, Role.Student] }
       },
 
 
       {
         path: 'course/attend-me', component: AttendmeComponent,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Student] }
       },
 
       {
         path: 'course/add-lecture', component: AddLectureComponent,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
       },
       {
         path: 'course/add-attendance', component: AddAttendanceComponent,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
       },
 
 
       {
         path: 'course/information', component: CoursesInfoComponentt,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher, Role.Student] }
       },
       {
         path: 'course/add-course-grade', component: TeacherAddCourseGradeComponent,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
       },
       {
         path: 'course/delete-course-grade', component: TeacherDeleteCourseGradeComponent,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
       },
       {
         path: 'course/students-sheet', component: TeacherStudentSheetComponent,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
       },
 
 
@@ -364,6 +379,7 @@ import { JwtInterceptor } from './_helpers';
       {
         path: 'course/assignments', component: AssignmentatComponentt,
         canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher, Role.Student] }
       },
 
       {
@@ -390,7 +406,22 @@ import { JwtInterceptor } from './_helpers';
         data: { roles: [Role.Teacher] }
       },
 
-      { path: 'notifications', component: NotificationsComponent },
+      {
+        path: 'notifications', component: NotificationsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher, Role.Student] }
+      },
+      {
+        path: 'course/students-attendance-report', component: AttendanceReportComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
+      },
+
+      {
+        path: 'course/students-grades-report', component: GradesReportComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher] }
+      },
       // ------------------------------------------------Teacher-----------------------------
 
 
@@ -403,10 +434,10 @@ import { JwtInterceptor } from './_helpers';
       // { path: 'teacher/grades', component: GradesComponentt },
       // { path: 'teacher/assignmentat', component: AssignmentatComponentt },
 
-      { path: 'teacher/AttendanceSheetStudentComponent', component: AttendanceSheetStudentComponentt },
+      // { path: 'teacher/AttendanceSheetStudentComponent', component: AttendanceSheetStudentComponentt },
 
 
-
+      { path: '**', redirectTo: '/home' },
 
 
 
