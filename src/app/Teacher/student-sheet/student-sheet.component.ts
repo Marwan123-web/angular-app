@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-student-sheet',
   templateUrl: './student-sheet.component.html',
@@ -14,6 +15,7 @@ import { Course } from 'src/app/_models/course';
 export class TeacherStudentSheetComponent implements OnInit {
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   courseusers: any;
   constructor(
     private router: Router,
@@ -21,15 +23,17 @@ export class TeacherStudentSheetComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
 
   ngOnInit(): void {
-
-    this.teacherservices.getCourseStudentsSheet(this.currentCourse.courseCode).subscribe(res => {
+    this.teacherservices.getCourseSemesterStudentsSheet(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
       this.courseusers = res;
     }, err => {
       this.courseusers = err

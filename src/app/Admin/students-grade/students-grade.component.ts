@@ -27,6 +27,8 @@ export class StudentsGradeComponent implements OnInit {
   fakedata: any;
   courseTotalGrades: any;
   courseDataCode: any;
+  semester_time: string;
+  courseSemesterDataCode: any;
 
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router) { this.things = []; }
@@ -34,12 +36,13 @@ export class StudentsGradeComponent implements OnInit {
 
   getcoursedata(x, y) {
 
-    this.adminservices.getCourseData(this._id).subscribe(res => {
-      this.coursedata = res.grades
+    this.adminservices.getCourseSemesterData(this._id, this.semester_time).subscribe(res => {
+      this.coursedata = res.semesters[0].grades
       this.courseDataCode = res;
+      this.courseSemesterDataCode = res.semesters[0];
       // this.courseTotalGrades = this.coursedata.length;
       for (let i = 0; i < this.coursedata.length; i++) {
-        this.adminservices.studentsGradesheet(x, this._id, this.coursedata[i].type).subscribe(res => {
+        this.adminservices.semesterStudentsGradesheet(x, this._id, this.semester_time, this.coursedata[i].type).subscribe(res => {
           // this.fakedata = { "_id": "5eba5bb7900576e5c44f34b2", "studentId": x, "courseId": this.currentCourse.courseCode, "gradeType": this.coursedata[i].type, "score": 100, "__v": 0 }
           this.useragrade = res;
           this.things[y][i] = this.useragrade;
@@ -57,20 +60,21 @@ export class StudentsGradeComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
+      this.semester_time = params.get('semester');
 
 
-      this.adminservices.totalCourseGrades(this._id).subscribe(res => {
+      this.adminservices.totalCourseSemesterGrades(this._id, this.semester_time).subscribe(res => {
         this.courseTotalGrades = res
       }, err => {
         this.courseTotalGrades = err
       });
-      this.adminservices.getCourseStudentsSheet(this._id).subscribe(res => {
+      this.adminservices.getCourseSemesterStudentsSheet(this._id, this.semester_time).subscribe(res => {
         this.courseusers = res;
         for (let y = 0; y < this.courseusers.length; y++) {
           this.adminservices.profile(this.courseusers[y]._id).subscribe(res => {
             this.userdata = res
 
-            this.adminservices.studentTotalGrades(this.courseusers[y]._id, this._id).subscribe(res => {
+            this.adminservices.semesterStudentTotalGrades(this.courseusers[y]._id, this._id, this.semester_time).subscribe(res => {
               this.usertotalgrades = res
               this.usertotalgradestotal[y] = this.usertotalgrades;
             }, err => {

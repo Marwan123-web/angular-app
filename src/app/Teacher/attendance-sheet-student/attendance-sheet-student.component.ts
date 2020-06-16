@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-attendance-sheet-student',
   templateUrl: './attendance-sheet-student.component.html',
@@ -14,6 +15,7 @@ import { Course } from 'src/app/_models/course';
 export class AttendanceSheetStudentComponentt implements OnInit {
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   coursedata: any;
   courseusers: any;
 
@@ -46,11 +48,13 @@ export class AttendanceSheetStudentComponentt implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.currentCourse = this.courseService.currentCourseValue;
     this.currentUser = this.authenticationService.currentUserValue;
+    this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
     this.things = [];
   }
   get isStudent() {
@@ -63,12 +67,69 @@ export class AttendanceSheetStudentComponentt implements OnInit {
   get isTeacherOrStudent() {
     return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
   }
+  //   getcoursedata(x, y) {
+  //     this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
+  //       this.coursedata = res.lectures
+  //       this.lecturesnumber = this.coursedata.length;
+  //       for (let i = 0; i < this.coursedata.length; i++) {
+  //         this.teacherservices.studentsAttendancesheet(x, this.currentCourse.courseCode, this.coursedata[i].lectureNumber).subscribe(res => {
+  //           this.userattendance = res;
+  //           this.things[y][i] = this.userattendance;
+  //         }, err => {
+  //           this.userattendance = err
+  //         });
+
+  //       }
+  //     }, err => {
+  //       this.coursedata = err
+  //     });
+  //   }
+
+  //   ngOnInit(): void {
+  //     this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
+  //       // console.log(this.currentCourse.courseCode)
+  //       this.coursesdata = res;
+  //     }, err => {
+  //       this.coursesdata = err
+  //     }
+  //     );
+
+  //     this.teacherservices.getCourseStudentsSheet(this.currentCourse.courseCode).subscribe(res => {
+  //       this.courseusers = res;
+  //       for (let y = 0; y < this.courseusers.length; y++) {
+  //         this.teacherservices.profile(this.courseusers[y]._id).subscribe(res => {
+  //           this.userdata = res
+
+  //           this.teacherservices.studentTotalAttendance(this.courseusers[y]._id, this.currentCourse.courseCode).subscribe(res => {
+  //             this.usertotalattendance = res
+  //             this.usertotalattendancetotal[y] = this.usertotalattendance;
+  //           }, err => {
+  //             this.usertotalattendance = err
+  //           });
+  //           this.arrayofusersdata[y] = this.userdata;
+  //           this.things[y] = [];
+  //           this.getcoursedata(this.arrayofusersdata[y]._id, y);
+  //         }, err => {
+  //           this.userdata = err
+  //         });
+
+  //       }
+  //     }, err => {
+  //       this.courseusers = err;
+  //     });
+
+
+  //   }
+
+  // }
+
+
   getcoursedata(x, y) {
-    this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
-      this.coursedata = res.lectures
+    this.teacherservices.getCourseSemesterData(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
+      this.coursedata = res.semesters[0].lectures
       this.lecturesnumber = this.coursedata.length;
       for (let i = 0; i < this.coursedata.length; i++) {
-        this.teacherservices.studentsAttendancesheet(x, this.currentCourse.courseCode, this.coursedata[i].lectureNumber).subscribe(res => {
+        this.teacherservices.studentsSemesterAttendancesheet(x, this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.coursedata[i].lectureNumber).subscribe(res => {
           this.userattendance = res;
           this.things[y][i] = this.userattendance;
         }, err => {
@@ -90,13 +151,13 @@ export class AttendanceSheetStudentComponentt implements OnInit {
     }
     );
 
-    this.teacherservices.getCourseStudentsSheet(this.currentCourse.courseCode).subscribe(res => {
+    this.teacherservices.getCourseSemesterStudentsSheet(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
       this.courseusers = res;
       for (let y = 0; y < this.courseusers.length; y++) {
         this.teacherservices.profile(this.courseusers[y]._id).subscribe(res => {
           this.userdata = res
 
-          this.teacherservices.studentTotalAttendance(this.courseusers[y]._id, this.currentCourse.courseCode).subscribe(res => {
+          this.teacherservices.semesterStudentTotalAttendance(this.courseusers[y]._id, this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
             this.usertotalattendance = res
             this.usertotalattendancetotal[y] = this.usertotalattendance;
           }, err => {
@@ -118,3 +179,4 @@ export class AttendanceSheetStudentComponentt implements OnInit {
   }
 
 }
+

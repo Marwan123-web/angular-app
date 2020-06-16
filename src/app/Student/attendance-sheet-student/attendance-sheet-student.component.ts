@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-attendance-sheet-student',
   templateUrl: './attendance-sheet-student.component.html',
@@ -14,6 +15,7 @@ import { Course } from 'src/app/_models/course';
 export class AttendanceSheetStudentComponent implements OnInit {
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   mydata: any;
   myattendance: any;
 
@@ -23,11 +25,13 @@ export class AttendanceSheetStudentComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.currentCourse = this.courseService.currentCourseValue;
     this.currentUser = this.authenticationService.currentUserValue;
+    this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
   get isStudent() {
     return this.currentUser && this.currentUser.role === Role.Student;
@@ -49,7 +53,7 @@ export class AttendanceSheetStudentComponent implements OnInit {
     }, err => {
       this.mydata = err;
     });
-    this.teacherservices.myattendancesheet(this.currentUser._id, this.currentCourse.courseCode).subscribe(res => {
+    this.teacherservices.semesterMyattendancesheet(this.currentUser._id, this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
       this.myattendance = res;
     }, err => {
       this.myattendance = err;

@@ -5,14 +5,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-add-lecture',
   templateUrl: './add-lecture.component.html',
   styleUrls: ['./add-lecture.component.scss']
 })
 export class AddLectureComponent implements OnInit {
-
+  currentCourseSemester: Semester;
   currentUser: User;
   currentCourse: Course;
   _id: string;
@@ -23,6 +24,8 @@ export class AddLectureComponent implements OnInit {
   beaconId: string;
   response: any;
   error: any;
+  response2: any;
+  error2: any;
 
 
   constructor(
@@ -31,10 +34,13 @@ export class AddLectureComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
   get isStudent() {
     return this.currentUser && this.currentUser.role === Role.Student;
@@ -50,8 +56,14 @@ export class AddLectureComponent implements OnInit {
     this.lectureNumber = lectureNumber.value, this.lectureLocation = lectureLocation.value, this.beaconId = beaconId.value;
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.teacherservices.addCourseLecture(this.currentCourse.courseCode, this.lectureNumber, this.lectureLocation, this.beaconId).subscribe(res => {
+    this.teacherservices.addCourseSemesterLecture(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.lectureNumber, this.lectureLocation, this.beaconId).subscribe(res => {
       this.response = res;
+      this.teacherservices.addCourseSemesterAttendance(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.lectureNumber, this.beaconId).subscribe(res => {
+        this.response2 = res;
+      }, err => {
+        this.error2 = err.error;
+      }
+      );
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');
       }

@@ -16,6 +16,9 @@ export class AddStudentGradeComponent implements OnInit {
   score: any;
   response: any;
   error: any;
+  coursesemesterdata: any;
+  coursaSemesterGrades: any;
+  semester_time: string;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router) { }
   sub: any;
@@ -27,10 +30,11 @@ export class AddStudentGradeComponent implements OnInit {
 
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
+      this.semester_time = params.get('semester');
       this.studentId = studentId.value, this.score = score.value;
       let response = document.getElementById('response');
       let error = document.getElementById('error');
-      this.adminservices.addStudentGrade(this._id, this.studentId, this.gradeType, this.score).subscribe(res => {
+      this.adminservices.addSemesterStudentGrade(this._id, this.studentId, this.semester_time, this.gradeType, this.score).subscribe(res => {
         this.response = res;
         if (error.classList.contains('d-block')) {
           error.classList.replace('d-block', 'd-none');
@@ -55,10 +59,18 @@ export class AddStudentGradeComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
+      this.semester_time = params.get('semester');
       this.adminservices.getCourseData(this._id).subscribe(res => {
         this.coursedata = res;
       }, err => {
         this.coursedata = err
+      }
+      );
+      this.adminservices.getCourseSemesterData(this._id, this.semester_time).subscribe(res => {
+        this.coursesemesterdata = res.semesters[0];
+        this.coursaSemesterGrades = res.semesters[0];
+      }, err => {
+        this.coursesemesterdata = err
       }
       );
     });

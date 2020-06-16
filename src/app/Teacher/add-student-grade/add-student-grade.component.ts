@@ -4,7 +4,9 @@ import { User, Role } from '../../_models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
-
+import { Semester } from '../../_models/semester';
+import { Course } from 'src/app/_models/course';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-add-student-grade',
   templateUrl: './add-student-grade.component.html',
@@ -15,16 +17,17 @@ export class AddCourseStudentGradeComponent implements OnInit {
 
 
   currentUser: User;
-
-  _id: string;
+  currentCourse: Course;
+  currentCourseSemester: Semester;
+  courseStudentsGrades: any;
   coursedata: any;
-  currentCourse: any;
-  taskType: string;
   gradeType: any;
-  studentId: string;
-  score: string;
+  studentId: any;
+  score: any;
   response: any;
   error: any;
+  coursesemesterdata: any;
+  coursaSemesterGrades: any;
 
 
   constructor(
@@ -33,10 +36,13 @@ export class AddCourseStudentGradeComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
   get isStudent() {
     return this.currentUser && this.currentUser.role === Role.Student;
@@ -54,10 +60,11 @@ export class AddCourseStudentGradeComponent implements OnInit {
   }
   addStudentGrade(studentId: HTMLInputElement, score: HTMLInputElement) {
 
+
     this.studentId = studentId.value, this.score = score.value;
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.teacherservices.addStudentGrade(this.currentCourse.courseCode, this.studentId, this.gradeType, this.score).subscribe(res => {
+    this.teacherservices.addSemesterStudentGrade(this.currentCourse.courseCode, this.studentId, this.currentCourseSemester.semesters[0].semester_time, this.gradeType, this.score).subscribe(res => {
       this.response = res;
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');
@@ -76,6 +83,8 @@ export class AddCourseStudentGradeComponent implements OnInit {
       error.innerHTML = this.error.msg;
     }
     );
+
+
   };
   ngOnInit(): void {
 
@@ -85,6 +94,14 @@ export class AddCourseStudentGradeComponent implements OnInit {
       this.coursedata = err
     }
     );
+    this.teacherservices.getCourseSemesterData(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
+      this.coursesemesterdata = res.semesters[0];
+      this.coursaSemesterGrades = res.semesters[0];
+    }, err => {
+      this.coursesemesterdata = err
+    }
+    );
 
   }
+
 }

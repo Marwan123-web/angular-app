@@ -214,12 +214,12 @@ export class HomeComponent implements OnInit {
       });
     };
     siteOwlCarousel();
-    if (location.search.indexOf('r') < 0) {
-      var hash = window.location.hash;
-      var loc = window.location.href.replace(hash, '/home');
-      loc += (loc.indexOf('?') < 0 ? '?' : '&') + 'r';
-      setTimeout(function () { window.location.href = loc + hash; }, 1);
-    }
+    // if (location.search.indexOf('r') < 0) {
+    //   var hash = window.location.hash;
+    //   var loc = window.location.href.replace(hash, '/home');
+    //   loc += (loc.indexOf('?') < 0 ? '?' : '&') + 'r';
+    //   setTimeout(function () { window.location.href = loc + hash; }, 1);
+    // }
   }
 
 }

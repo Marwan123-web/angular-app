@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-grades',
   templateUrl: './grades.component.html',
@@ -14,6 +15,7 @@ import { Course } from 'src/app/_models/course';
 export class GradesComponent implements OnInit {
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   GradeTypeGrade: any;
   studentgrades: any;
   gradetype: any;
@@ -28,11 +30,13 @@ export class GradesComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.currentCourse = this.courseService.currentCourseValue;
     this.currentUser = this.authenticationService.currentUserValue;
+    this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
   get isStudent() {
     return this.currentUser && this.currentUser.role === Role.Student;
@@ -49,22 +53,22 @@ export class GradesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.teacherservices.totalCourseGrades(this.currentCourse.courseCode).subscribe(res => {
+    this.teacherservices.totalCourseSemesterGrades(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
       this.courseTotalGrades = res
     }, err => {
       this.courseTotalGrades = err
     });
 
-    this.teacherservices.studentTotalGrades(this.currentUser._id, this.currentCourse.courseCode).subscribe(res => {
+    this.teacherservices.semesterStudentTotalGrades(this.currentUser._id, this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
       this.usertotalgrades = res
     }, err => {
       this.usertotalgrades = err
     });
 
-    this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
-      this.GradeTypeGrade = res.grades;
+    this.teacherservices.getCourseSemesterData(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
+      this.GradeTypeGrade = res.semesters[0].grades;
       for (let i = 0; i < this.GradeTypeGrade.length; i++) {
-        this.teacherservices.getMyCourseGrades(this.currentUser._id, this.currentCourse.courseCode, this.GradeTypeGrade[i].type).subscribe(res => {
+        this.teacherservices.getMyCourseSemesterGrades(this.currentUser._id, this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.GradeTypeGrade[i].type).subscribe(res => {
           this.studentgrades = res;
           if (this.studentgrades) {
             this.arrofdata.push(this.studentgrades);

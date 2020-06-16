@@ -17,16 +17,32 @@
 
     <div class="container">
         <div class="row row2 align-items-center">
-            <div class="col-lg-7 text-center text-lg-left" *ngIf="coursesdata" style="margin-top: 200px;">
-                <h1 data-aos="fade-right">{{coursesdata.courseName}}</h1>
+            <div class="col-lg-7 text-center text-lg-left" *ngIf="coursedata" style="margin-top: 200px;">
+                <h1 data-aos="fade-right">{{coursedata.courseName}}</h1>
                 <div class="mb-5" data-aos="fade-right" data-aos-delay="100">
                     <table>
+                        <tr>
+                            <td *ngIf="coursesemesterdata">
+                                <p style="font-weight: bold;">semester Time:</p>
+                            </td>
+                            <td>
+                                <p>{{coursesemesterdata.semester_time}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td *ngIf="coursesemesterdata">
+                                <p style="font-weight: bold;">semester Status:</p>
+                            </td>
+                            <td>
+                                <p>{{coursesemesterdata.semester_status}}</p>
+                            </td>
+                        </tr>
                         <tr>
                             <td>
                                 <p style="font-weight: bold;">Course Code:</p>
                             </td>
                             <td>
-                                <p>{{coursesdata.courseCode}}</p>
+                                <p>{{coursedata.courseCode}}</p>
                             </td>
                         </tr>
                         <tr>
@@ -34,7 +50,7 @@
                                 <p style="font-weight: bold;">Department:</p>
                             </td>
                             <td>
-                                <p>{{coursesdata.courseDepartment}}</p>
+                                <p>{{coursedata.courseDepartment}}</p>
                             </td>
                         </tr>
                         <tr>
@@ -42,10 +58,10 @@
                                 <p style="font-weight: bold;">Credit Hours:</p>
                             </td>
                             <td>
-                                <p>{{coursesdata.creaditHours}}</p>
+                                <p>{{coursedata.creaditHours}}</p>
                             </td>
                         </tr>
-                        <tr *ngIf="isTeacher" >
+                        <tr *ngIf="isTeacher">
                             <td>
                                 <p style="font-weight: bold;">Number Of Students:</p>
                             </td>
@@ -61,11 +77,12 @@
                                 <table class="table" style="color: white;">
                                     <thead>
                                         <tr>
-                                            <th scope="col" *ngFor='let grade of coursesdata.grades'>{{grade.type}}</th>
+                                            <th scope="col" *ngFor='let grade of coursaSemesterGrades.grades'>
+                                                {{grade.type}}</th>
                                         </tr>
                                     </thead>
                                     <tr>
-                                        <td *ngFor='let grade of coursesdata.grades'>{{grade.grade}}</td>
+                                        <td *ngFor='let grade of this.coursaSemesterGrades.grades'>{{grade.grade}}</td>
 
                                     </tr>
                                 </table>
@@ -76,40 +93,15 @@
                 </div>
             </div>
 
-            <div class="col-lg-5 logo-wrap" data-aos="fade-left">
-                <table class="doctor-info">
-                    <tr>
-                        <td colspan="2">
-                            <img src="../assets/img/Avatar.png" alt="Image">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p style="font-weight: bold;">Professor:</p>
-                        </td>
-                        <td>
-                            <p>Marwa Salah</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p style="font-weight: bold;">Email:</p>
-                        </td>
-                        <td>
-                            <p>marwa123@gmail.com</p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
             <button type="button" class="attend-btn courseInfo-btn btn-dark hvr-rectangle-in" *ngIf="isTeacher"
-                [routerLink]="['/course/students-sheet']" value="students-sheet">Students
+                [routerLink]="['/course/semester/students-sheet']" value="students-sheet">Students
                 Sheet
             </button>
             <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in" *ngIf="isTeacher"
-                [routerLink]="['/course/add-course-grade']" value="students-sheet">Add Course Grades
+                [routerLink]="['/course/semester/add-course-grade']" value="students-sheet">Add Course Grades
             </button>
             <button type="button" class="attend-btn courseInfo-btn btn-danger hvr-rectangle-in" *ngIf="isTeacher"
-                [routerLink]="['/course/delete-course-grade']" value="students-sheet">Delete Course Grades
+                [routerLink]="['/course/semester/delete-course-grade']" value="students-sheet">Delete Course Grades
             </button>
         </div>
     </div>

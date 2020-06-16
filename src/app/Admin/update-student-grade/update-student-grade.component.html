@@ -31,11 +31,11 @@
                                 <input type="number" min="20201800" class="form-control" placeholder="Student ID *"
                                     #studentId value="">
                             </div>
-                            <div class="form-group" *ngIf="coursedata">
+                            <div class="form-group" *ngIf="coursaSemesterGrades">
                                 <select class="form-control" name="gradeType" required id="gradeType"
                                     (change)="selectChangeHandler($event)">
                                     <option value="" disabled selected hidden>Grade Type</option>
-                                    <option *ngFor="let grade of coursedata.grades">{{grade.type}}</option>
+                                    <option *ngFor="let grade of coursaSemesterGrades.grades">{{grade.type}}</option>
                                 </select>
                             </div>
                             <div class="form-group">

@@ -13,6 +13,8 @@ export class DeleteCourseGradeComponent implements OnInit {
   response: any;
   coursedata: any;
   error: any;
+  semester_time: string;
+
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router) { }
   sub: any;
@@ -23,9 +25,11 @@ export class DeleteCourseGradeComponent implements OnInit {
   deleteCourseGrade() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
+      this.semester_time = params.get('semester');
+
       let response = document.getElementById('response');
       let error = document.getElementById('error');
-      this.adminservices.deleteCourseGrade(this._id, this.gradetype).subscribe(res => {
+      this.adminservices.deleteCourseSemesterGrade(this._id, this.semester_time, this.gradetype).subscribe(res => {
         this.response = res;
         if (error.classList.contains('d-block')) {
           error.classList.replace('d-block', 'd-none');
@@ -48,8 +52,9 @@ export class DeleteCourseGradeComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
-      this.adminservices.getCourseData(this._id).subscribe(res => {
-        this.coursedata = res;
+      this.semester_time = params.get('semester');
+      this.adminservices.getCourseSemesterData(this._id, this.semester_time).subscribe(res => {
+        this.coursedata = res.semesters[0];
       }, err => {
         this.coursedata = err
       }

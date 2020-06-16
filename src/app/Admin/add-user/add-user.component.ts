@@ -14,6 +14,7 @@ export class AddUserComponent implements OnInit {
   role: string;
   response: any;
   error: any;
+  dataOfJoin: any;
   // id, name, email, password
   constructor(private adminservices: AdminservicesService) { }
   selectChangeHandler(event: any) {
@@ -24,14 +25,15 @@ export class AddUserComponent implements OnInit {
     this._id = id.value, this.name = name.value, this.email = email.value, this.password = password.value;
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.adminservices.addUser(this._id, this.name, this.email, this.password, this.role).subscribe(res => {
+    this.dataOfJoin = new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
+    this.adminservices.addUser(this._id, this.name, this.email, this.password, this.role,this.dataOfJoin).subscribe(res => {
       this.response = res;
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');
       }
       response.classList.replace('d-none', 'd-block');
       response.innerHTML = this.response.msg;
-    
+
       id.value = "";
       name.value = "";
       email.value = "";

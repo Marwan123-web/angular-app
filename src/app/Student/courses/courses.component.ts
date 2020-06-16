@@ -4,8 +4,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from '../../_models';
 import { Course } from '../../_models/course';
+import { Semester } from '../../_models/semester';
+
 import { first } from 'rxjs/operators';
 import { CourseService } from 'src/app/services/course.service';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
+
 declare var $: any;
 @Component({
   selector: 'app-courses',
@@ -19,23 +23,78 @@ export class CoursesComponents implements OnInit {
   usercoursesdata: any;
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
+
+  coursesdata: any;
+  arr: any[];
+  courseSemesterdata: any;
+  semesterdata: any;
+  status: any;
 
   constructor(private teacherservices: TeacherServiceService, private _Activatedroute: ActivatedRoute,
-    private _router: Router, private authenticationService: AuthService, private courseService: CourseService, ) {
+    private _router: Router,
+    private authenticationService: AuthService,
+    private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
+  ) {
     this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
 
+
+  }
+  selectChangeHandler(event: any) {
+    //update the ui
+    this.status = event.target.value;
+
+    this.teacherservices.myCoursesByStatus(this.currentUser._id, this.status).subscribe(res => {
+      this.usercoursesdata = res;
+      this.arr = []
+      if (res) {
+        for (let i = 0; i < res.length; i++) {
+          this.teacherservices.getCourseSemesterData(this.usercoursesdata[i].Id, this.usercoursesdata[i].semester_time).subscribe(res => {
+            this.coursesdata = res;
+            this.semesterdata = this.coursesdata.semesters[0]
+            var objectC = { ...this.usercoursesdata[i], ...this.coursesdata };
+            this.arr[i] = objectC
+          }, err => {
+            this.coursesdata = err
+          }
+          );
+        }
+      }
+
+    }, err => {
+      this.usercoursesdata = err
+    }
+    );
   }
   ngOnInit(): void {
     this.teacherservices.myCourses(this.currentUser._id).subscribe(res => {
       this.usercoursesdata = res;
+      this.arr = []
+      if (res) {
+        for (let i = 0; i < res.length; i++) {
+          this.teacherservices.getCourseSemesterData(this.usercoursesdata[i].Id, this.usercoursesdata[i].semester_time).subscribe(res => {
+            this.coursesdata = res;
+            this.semesterdata = this.coursesdata.semesters[0]
+            var objectC = { ...this.usercoursesdata[i], ...this.coursesdata };
+            this.arr[i] = objectC
+          }, err => {
+            this.coursesdata = err
+          }
+          );
+        }
+      }
+
+
     }, err => {
       this.usercoursesdata = err
     }
     );
 
-       /*==================================================================
-    [ Focus input ]*/
+    /*==================================================================
+ [ Focus input ]*/
     $('.input100').each(function () {
       $(this).on('blur', function () {
         if ($(this).val().trim() != "") {
@@ -240,6 +299,18 @@ export class CoursesComponents implements OnInit {
     this.courseService.getCourse(courseCode).pipe(first()).subscribe(res => {
     }, err => {
       console.log('Fail to get Course');
+    }
+    );
+
+  }
+
+  closSemester() {
+    this.semesterserviceService.closeSemester();
+  }
+  openSemester(courseCode, semester_time) {
+    this.semesterserviceService.getCourseSemesterData(courseCode, semester_time).pipe(first()).subscribe(res => {
+    }, err => {
+      console.log('Fail to get Course Semester');
     }
     );
 

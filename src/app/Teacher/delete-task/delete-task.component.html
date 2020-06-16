@@ -27,11 +27,11 @@
                     <h3 class="addUser-heading">Delete Task</h3>
                     <div class="row addUser-form">
                         <div class="col-md-12">
-                            <div class="form-group" *ngIf="coursedata">
+                            <div class="form-group" *ngIf="coursesemesterdata">
                                 <select class="form-control" name="gradeType" required id="gradeType"
                                     (change)="selectChangeHandler($event)">
                                     <option value="" disabled selected hidden>Task Name *</option>
-                                    <option *ngFor="let tasks of coursedata.tasks">{{tasks.type}}</option>
+                                    <option *ngFor="let tasks of coursesemesterdata.tasks">{{tasks.type}}</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block btn-lg" (click)="DeleteTask()">Delete

@@ -14,6 +14,7 @@ import { Role } from './_models';
 
 
 
+
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
@@ -72,7 +73,7 @@ import { TeacherStudentSheetComponent } from './Teacher/student-sheet/student-sh
 
 import { AddLectureComponent } from './Teacher/add-lecture/add-lecture.component';
 
-import { AddAttendanceComponent } from './Teacher/add-attendance/add-attendance.component';
+// import { AddAttendanceComponent } from './Teacher/add-attendance/add-attendance.component';
 
 
 import { AttendmeComponent } from './Student/attendme/attendme.component';
@@ -87,6 +88,10 @@ import { from } from 'rxjs';
 import { JwtInterceptor } from './_helpers';
 import { AttendanceReportComponent } from './Teacher/attendance-report/attendance-report.component';
 import { GradesReportComponent } from './Teacher/grades-report/grades-report.component';
+
+import { CourseSemestersComponent } from './Admin/course-semesters/course-semesters.component';
+import { AddCourseSemesterComponent } from './Admin/add-course-semester/add-course-semester.component';
+import { UserCourseInfoComponent } from './Admin/user-course-info/user-course-info.component';
 
 
 @NgModule({
@@ -139,7 +144,7 @@ import { GradesReportComponent } from './Teacher/grades-report/grades-report.com
     TeacherStudentSheetComponent,
 
     AddLectureComponent,
-    AddAttendanceComponent,
+    // AddAttendanceComponent,
 
 
 
@@ -155,6 +160,9 @@ import { GradesReportComponent } from './Teacher/grades-report/grades-report.com
     AttendmeComponent,
     AttendanceReportComponent,
     GradesReportComponent,
+    CourseSemestersComponent,
+    AddCourseSemesterComponent,
+    UserCourseInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -206,44 +214,56 @@ import { GradesReportComponent } from './Teacher/grades-report/grades-report.com
         data: { roles: [Role.Admin] }
       },
 
+      //ana hna ya joo
       {
-        path: 'course/info/:id', component: CourseInfoComponent,
+        path: 'course/semesters/:id', component: CourseSemestersComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin] }
+      },
+      //ana hna ya joo
+      {
+        path: 'course/add-semester/:id', component: AddCourseSemesterComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin] }
+      },
+      {
+        path: 'course/semester/info/:id/:semester', component: CourseInfoComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/students-sheet/:id', component: StudentSheetComponent,
+        path: 'course/semester/students-sheet/:id/:semester', component: StudentSheetComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },//--------
 
       {
-        path: 'course/add-course-grade/:id', component: AddCourseGradeComponent,
+        path: 'course/semester/add-course-grade/:id/:semester', component: AddCourseGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/delete-course-grade/:id', component: DeleteCourseGradeComponent,
+        path: 'course/semester/delete-course-grade/:id/:semester', component: DeleteCourseGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/students-grades/:id', component: StudentsGradeComponent,
+        path: 'course/semester/students-grades/:id/:semester', component: StudentsGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/add-student-grade/:id', component: AddStudentGradeComponent,
+        path: 'course/semester/add-student-grade/:id/:semester', component: AddStudentGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/update-student-grade/:id', component: UpdateStudentGradeComponent,
+        path: 'course/semester/update-student-grade/:id/:semester', component: UpdateStudentGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
@@ -258,6 +278,11 @@ import { GradesReportComponent } from './Teacher/grades-report/grades-report.com
 
       {
         path: 'user/courses/:id', component: UserCoursesComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin] }
+      },
+      {
+        path: 'user/course/info/:id/:courseCode/:semester', component: UserCourseInfoComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
@@ -302,106 +327,106 @@ import { GradesReportComponent } from './Teacher/grades-report/grades-report.com
         data: { roles: [Role.Teacher, Role.Student] }
       },
       {
-        path: 'course/home', component: CoursesSingleComponent,
+        path: 'course/semester/home', component: CoursesSingleComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher, Role.Student] }
       },
 
       {
-        path: 'course/attendance', component: AttendanceComponentt,
+        path: 'course/semester/attendance', component: AttendanceComponentt,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher, Role.Student] }
       },
 
 
       {
-        path: 'course/attend-me', component: AttendmeComponent,
+        path: 'course/semester/attend-me', component: AttendmeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Student] }
       },
 
       {
-        path: 'course/add-lecture', component: AddLectureComponent,
+        path: 'course/semester/add-lecture', component: AddLectureComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
-      {
-        path: 'course/add-attendance', component: AddAttendanceComponent,
-        canActivate: [AuthGuard],
-        data: { roles: [Role.Teacher] }
-      },
+      // {
+      //   path: 'course/semester/add-attendance', component: AddAttendanceComponent,
+      //   canActivate: [AuthGuard],
+      //   data: { roles: [Role.Teacher] }
+      // },
 
 
       {
-        path: 'course/information', component: CoursesInfoComponentt,
+        path: 'course/semester/information', component: CoursesInfoComponentt,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher, Role.Student] }
       },
       {
-        path: 'course/add-course-grade', component: TeacherAddCourseGradeComponent,
+        path: 'course/semester/add-course-grade', component: TeacherAddCourseGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
       {
-        path: 'course/delete-course-grade', component: TeacherDeleteCourseGradeComponent,
+        path: 'course/semester/delete-course-grade', component: TeacherDeleteCourseGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
       {
-        path: 'course/students-sheet', component: TeacherStudentSheetComponent,
+        path: 'course/semester/students-sheet', component: TeacherStudentSheetComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
 
 
       {
-        path: 'course/mygrades', component: GradesComponent,
+        path: 'course/semester/mygrades', component: GradesComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Student] }
       },
       {
-        path: 'course/students/grades', component: GradesComponentt,
+        path: 'course/semester/students/grades', component: GradesComponentt,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
       {
-        path: 'course/add-grade', component: AddCourseStudentGradeComponent,
+        path: 'course/semester/add-grade', component: AddCourseStudentGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
       {
-        path: 'course/update-grade', component: UpdateStudentGradetComponent,
+        path: 'course/semester/update-grade', component: UpdateStudentGradetComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
 
 
       {
-        path: 'course/assignments', component: AssignmentatComponentt,
+        path: 'course/semester/assignments', component: AssignmentatComponentt,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher, Role.Student] }
       },
 
       {
-        path: 'course/add-task', component: AddTaskComponent,
+        path: 'course/semester/add-task', component: AddTaskComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
       {
-        path: 'course/delete-task', component: DeleteTaskComponent,
+        path: 'course/semester/delete-task', component: DeleteTaskComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
 
 
       {
-        path: 'course/attendance-sheet', component: AttendanceSheetStudentComponent,
+        path: 'course/semester/attendance-sheet', component: AttendanceSheetStudentComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Student] }
       },
 
       {
-        path: 'course/students-attendance-sheet', component: AttendanceSheetStudentComponentt,
+        path: 'course/semester/students-attendance-sheet', component: AttendanceSheetStudentComponentt,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
@@ -412,20 +437,20 @@ import { GradesReportComponent } from './Teacher/grades-report/grades-report.com
         data: { roles: [Role.Teacher, Role.Student] }
       },
       {
-        path: 'course/students-attendance-report', component: AttendanceReportComponent,
+        path: 'course/semester/students-attendance-report', component: AttendanceReportComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
 
       {
-        path: 'course/students-grades-report', component: GradesReportComponent,
+        path: 'course/semester/students-grades-report', component: GradesReportComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Teacher] }
       },
       // ------------------------------------------------Teacher-----------------------------
 
 
-      // { path: 'teacher/courses', component: CoursesComponentt },
+      //  { path: 'test', component: UserCoursesComponent2 },
 
       // { path: 'teacher/attendance', component: AttendanceComponentt },
       // { path: 'teacher/notifications', component: NotificationsComponentt },

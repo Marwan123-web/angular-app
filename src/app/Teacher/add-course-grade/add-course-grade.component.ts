@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-add-course-grade',
   templateUrl: './add-course-grade.component.html',
@@ -14,6 +15,7 @@ import { Course } from 'src/app/_models/course';
 export class TeacherAddCourseGradeComponent implements OnInit {
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   _id: any;
   gradetype: any;
   grade: any;
@@ -25,10 +27,13 @@ export class TeacherAddCourseGradeComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
   sub: any;
 
@@ -36,14 +41,15 @@ export class TeacherAddCourseGradeComponent implements OnInit {
     this.gradetype = type.value, this.grade = grade.value;
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.teacherservices.addCourseGrade(this.currentCourse.courseCode, this.gradetype, this.grade).subscribe(res => {
+
+
+    this.teacherservices.addCourseSemesterGrade(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.gradetype, this.grade).subscribe(res => {
       this.response = res;
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');
       }
       response.classList.replace('d-none', 'd-block');
       response.innerHTML = this.response.msg;
-
 
       type.value = '';
       grade.value = "";
@@ -56,6 +62,8 @@ export class TeacherAddCourseGradeComponent implements OnInit {
       error.innerHTML = this.error.msg;
     }
     );
+
+
   }
   ngOnInit(): void {
 

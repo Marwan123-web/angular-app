@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-attendme',
   templateUrl: './attendme.component.html',
@@ -15,6 +16,7 @@ export class AttendmeComponent implements OnInit {
 
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   _id: string;
   coursesdata: any;
 
@@ -31,11 +33,13 @@ export class AttendmeComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.currentCourse = this.courseService.currentCourseValue;
     this.currentUser = this.authenticationService.currentUserValue;
+    this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
   get isStudent() {
     return this.currentUser && this.currentUser.role === Role.Student;
@@ -51,7 +55,7 @@ export class AttendmeComponent implements OnInit {
     this.lectureNumber = lectureNumber.value, this.beaconId = beaconId.value;
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.teacherservices.attendMe(this.currentUser._id, this.currentCourse.courseCode, this.lectureNumber, this.beaconId).subscribe(res => {
+    this.teacherservices.semesterAttendMe(this.currentUser._id, this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.lectureNumber, this.beaconId).subscribe(res => {
       this.response = res;
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');

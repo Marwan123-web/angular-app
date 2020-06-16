@@ -7,6 +7,8 @@ import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
 import { HttpClient } from '@angular/common/http';
 import * as CanvasJS from '../../../assets/canvasjs.min';
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-attendance-report',
   templateUrl: './attendance-report.component.html',
@@ -15,6 +17,7 @@ import * as CanvasJS from '../../../assets/canvasjs.min';
 export class AttendanceReportComponent implements OnInit {
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   data: Data[];
 
   week = [];
@@ -31,15 +34,17 @@ export class AttendanceReportComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
-    private httpClient: HttpClient
+    private semesterserviceService: SemesterserviceService
+
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.currentCourse = this.courseService.currentCourseValue;
     this.currentUser = this.authenticationService.currentUserValue;
+    this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
 
   ngOnInit(): void {
-    this.teacherservices.attendanceReport(this.currentCourse.courseCode).subscribe((res: Data[]) => {
+    this.teacherservices.semesterAttendanceReport(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe((res: Data[]) => {
       res.forEach(y => {
         this.week.push(y.lectureNumber);
         this.attendance.push(y.numberOfAttendance);

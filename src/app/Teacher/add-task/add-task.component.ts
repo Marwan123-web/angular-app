@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
@@ -15,6 +16,7 @@ export class AddTaskComponent implements OnInit {
 
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   _id: string;
   coursesdata: any;
 
@@ -29,10 +31,13 @@ export class AddTaskComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
   get isStudent() {
     return this.currentUser && this.currentUser.role === Role.Student;
@@ -48,7 +53,7 @@ export class AddTaskComponent implements OnInit {
     this.taskType = taskType.value, this.taskPath = taskPath.value;
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.teacherservices.addCourseTask(this.currentCourse.courseCode, this.taskType, this.taskPath).subscribe(res => {
+    this.teacherservices.addCourseSemesterTask(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.taskType, this.taskPath).subscribe(res => {
       this.response = res;
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');

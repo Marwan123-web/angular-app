@@ -50,7 +50,7 @@ export class AddAttendanceComponent implements OnInit {
     this.lectureNumber = lectureNumber.value, this.beaconId = beaconId.value;
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.teacherservices.addCourseAttendance(this.currentCourse.courseCode, this.lectureNumber, this.beaconId).subscribe(res => {
+    this.teacherservices.addCourseSemesterLecture(this.currentCourse.courseCode, this.lectureNumber, this.beaconId).subscribe(res => {
       this.response = res;
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');

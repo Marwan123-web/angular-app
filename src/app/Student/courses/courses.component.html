@@ -22,16 +22,28 @@
                     <h1 data-aos="fade-up" data-aos-delay="">Courses</h1>
                 </div>
             </div>
+            <div class="form-group mb-2">
+                <select class="form-control" id="role" (change)="selectChangeHandler($event)">
+                    <option value="new">New Register Courses</option>
+                    <option value="pass">Passed Courses</option>
+                    <option value="fail">Failed Courses</option>
+                    <option value="postponed">Postponed Courses</option>
+                </select>
+            </div>
             <div class="row align-items-stretch" data-aos="fade-up">
 
-                <div class="col-lg-4 mb-4 mb-lg-0" *ngFor='let course of usercoursesdata'(focus)="closCourse()">
+                <div class="col-lg-4 mb-4 mb-lg-0" *ngFor='let course of arr' (focus)="closCourse();closSemester()">
                     <div class="courses h-100 text-center">
-                        <span class="department">{{course.courseDepartment}}</span>
+                        <span class="department">{{course.semester_time}}</span>
                         <h3>{{course.courseName}}</h3>
                         <ul class="list-unstyled">
                             <li><strong>Course Code:</strong> {{course.courseCode}}</li>
-                        </ul> 
-                        <p><a  (focus)="openCourse(course.courseCode)"  [routerLink]="['/course/home']" class="btn btn-white">Open</a></p>
+                            <li><strong>Registration Status:</strong> {{course.status}}</li>
+                            <li><strong>Semester Status:</strong> {{course.semesters[0].semester_status}}</li>
+
+                        </ul>
+                        <p><a (focus)="openCourse(course.courseCode);openSemester(course.courseCode,course.semester_time)"
+                                [routerLink]="['/course/semester/home']" class="btn btn-white">Open</a></p>
                     </div>
                 </div>
 

@@ -16,6 +16,7 @@ export class AddCourseGradeComponent implements OnInit {
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router) { }
   sub: any;
+  semester_time: string;
 
   addCourseGrade(type: HTMLInputElement, grade: HTMLInputElement) {
     this.gradetype = type.value, this.grade = grade.value;
@@ -23,7 +24,9 @@ export class AddCourseGradeComponent implements OnInit {
     let error = document.getElementById('error');
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
-      this.adminservices.addCourseGrade(this._id, this.gradetype, this.grade).subscribe(res => {
+      this.semester_time = params.get('semester');
+
+      this.adminservices.addCourseSemesterGrade(this._id,this.semester_time, this.gradetype, this.grade).subscribe(res => {
         this.response = res;
         if (error.classList.contains('d-block')) {
           error.classList.replace('d-block', 'd-none');

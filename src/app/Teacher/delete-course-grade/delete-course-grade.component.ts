@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-delete-course-grade',
   templateUrl: './delete-course-grade.component.html',
@@ -14,6 +15,7 @@ import { Course } from 'src/app/_models/course';
 export class TeacherDeleteCourseGradeComponent implements OnInit {
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   _id: any;
   gradetype: any;
   grade: any;
@@ -26,10 +28,13 @@ export class TeacherDeleteCourseGradeComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
 
   selectChangeHandler(event: any) {
@@ -37,9 +42,11 @@ export class TeacherDeleteCourseGradeComponent implements OnInit {
     this.gradetype = event.target.value;
   }
   deleteCourseGrade() {
+
+
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.teacherservices.deleteCourseGrade(this.currentCourse.courseCode, this.gradetype).subscribe(res => {
+    this.teacherservices.deleteCourseSemesterGrade(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.gradetype).subscribe(res => {
       this.response = res;
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');
@@ -60,8 +67,9 @@ export class TeacherDeleteCourseGradeComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
-      this.coursedata = res;
+
+    this.teacherservices.getCourseSemesterData(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
+      this.coursedata = res.semesters[0];
     }, err => {
       this.coursedata = err
     }

@@ -23,20 +23,23 @@
                         <h1 class="course-name" data-aos="fade-up" data-aos-delay="" *ngIf="coursesdata">
                             {{coursesdata.courseName}}</h1>
                     </div>
+                    <div class="col-md-7 text-center hero-text">
+                        <h1 class="course-name" data-aos="fade-up" data-aos-delay="" *ngIf="coursesemesterdata">
+                            {{coursesemesterdata.semester_time}}</h1>
+                    </div>
                 </div>
                 <div class="row justify-content-center">
                     <button type="button" class="attend-btn  hvr-rectangle-in" data-toggle="modal" *ngIf="isTeacher"
-                        [routerLink]="['/course/add-lecture']">Add Lecture</button>
-                    <button type="button" class="attend-btn  hvr-rectangle-in" data-toggle="modal" *ngIf="isTeacher"
-                    [routerLink]="['/course/add-attendance']">Add Attendance</button>
+                        [routerLink]="['/course/semester/add-lecture']">Add Lecture/Attendance</button>
+                    <!-- <button type="button" class="attend-btn  hvr-rectangle-in" data-toggle="modal" *ngIf="isTeacher"
+                        [routerLink]="['/course/add-attendance']">Add Attendance</button> -->
                     <button type="button" class="attend-btn attendsheet-btn hvr-rectangle-in" *ngIf="isTeacher"
-                    [routerLink]="['/course/students-attendance-sheet']" value="attendance-sheet">View
+                        [routerLink]="['/course/semester/students-attendance-sheet']" value="attendance-sheet">View
                         Attendance Sheet</button>
                     <button type="button" class="attend-btn  hvr-rectangle-in" data-toggle="modal" *ngIf="isStudent"
-                    [routerLink]="['/course/attend-me']">Attend</button>
+                        [routerLink]="['/course/semester/attend-me']">Attend</button>
                     <button type="button" class="attend-btn attendsheet-btn hvr-rectangle-in" *ngIf="isStudent"
-                    [routerLink]="['/course/attendance-sheet']"
-                        value="AttendanceSheetStudentComponent">View
+                        [routerLink]="['/course/semester/attendance-sheet']" value="AttendanceSheetStudentComponent">View
                         Attendance Sheet</button>
                 </div>
             </div>

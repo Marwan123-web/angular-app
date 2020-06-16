@@ -6,7 +6,8 @@ import { TeacherServiceService } from 'src/app/services/teacher-service.service'
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
 import { HttpClient } from '@angular/common/http';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 import * as CanvasJS from '../../../assets/canvasjs.min';
 @Component({
   selector: 'app-grades-report',
@@ -16,6 +17,7 @@ import * as CanvasJS from '../../../assets/canvasjs.min';
 export class GradesReportComponent implements OnInit {
   currentUser: User;
   currentCourse: Course;
+  currentCourseSemester: Semester;
   data: GradesData[];
 
 
@@ -45,16 +47,17 @@ export class GradesReportComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
-    private httpClient: HttpClient
+    private semesterserviceService: SemesterserviceService
+
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.currentCourse = this.courseService.currentCourseValue;
     this.currentUser = this.authenticationService.currentUserValue;
+    this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
   ngOnInit(): void {
 
-    this.teacherservices.gradesReport(this.currentCourse.courseCode).subscribe((res: GradesData[]) => {
-      console.log(res)
+    this.teacherservices.semesterGradesReport(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe((res: GradesData[]) => {
       res.forEach(y => {
         this.gradeType.push(y.GradeType);
         this.score.push(y.GradeGrade);

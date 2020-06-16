@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { ThrowStmt } from '@angular/compiler';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-grades',
   templateUrl: './grades.component.html',
@@ -16,8 +17,8 @@ export class GradesComponentt implements OnInit {
 
 
   currentUser: User;
-
-  // _id: string;
+  currentCourseSemester: Semester;
+  _id: any;
   currentCourse: any;
   courseStudentsGrades: any;
   GradeTypeGrade: any;
@@ -35,19 +36,23 @@ export class GradesComponentt implements OnInit {
   usertotalgradestotal: Array<object> = [];
   fakedata: any;
   courseTotalGrades: any;
-  coursegrades: any;
+  courseDataCode: any;
+  semester_time: string;
+  courseSemesterDataCode: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
     this.things = [];
-
   }
   get isStudent() {
     return this.currentUser && this.currentUser.role === Role.Student;
@@ -60,14 +65,16 @@ export class GradesComponentt implements OnInit {
     return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
   }
 
-
   getcoursedata(x, y) {
 
-    this.teacherservices.getCourseData(this.currentCourse.courseCode).subscribe(res => {
-      this.coursedata=res;
-      this.coursegrades = res.grades
-      for (let i = 0; i < this.coursegrades.length; i++) {
-        this.teacherservices.studentsGradesheet(x, this.currentCourse.courseCode, this.coursegrades[i].type).subscribe(res => {
+    this.teacherservices.getCourseSemesterData(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
+      this.coursedata = res.semesters[0].grades
+      this.courseDataCode = res;
+      this.courseSemesterDataCode = res.semesters[0];
+      // this.courseTotalGrades = this.coursedata.length;
+      for (let i = 0; i < this.coursedata.length; i++) {
+        this.teacherservices.semesterStudentsGradesheet(x, this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.coursedata[i].type).subscribe(res => {
+          // this.fakedata = { "_id": "5eba5bb7900576e5c44f34b2", "studentId": x, "courseId": this.currentCourse.courseCode, "gradeType": this.coursedata[i].type, "score": 100, "__v": 0 }
           this.useragrade = res;
           this.things[y][i] = this.useragrade;
 
@@ -77,23 +84,26 @@ export class GradesComponentt implements OnInit {
 
       }
     }, err => {
-      this.coursegrades = err
+      this.coursedata = err
     });
   }
+
   ngOnInit(): void {
 
-    this.teacherservices.totalCourseGrades(this.currentCourse.courseCode).subscribe(res => {
+
+
+    this.teacherservices.totalCourseSemesterGrades(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
       this.courseTotalGrades = res
     }, err => {
       this.courseTotalGrades = err
     });
-    this.teacherservices.getCourseStudentsSheet(this.currentCourse.courseCode).subscribe(res => {
+    this.teacherservices.getCourseSemesterStudentsSheet(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
       this.courseusers = res;
       for (let y = 0; y < this.courseusers.length; y++) {
         this.teacherservices.profile(this.courseusers[y]._id).subscribe(res => {
           this.userdata = res
 
-          this.teacherservices.studentTotalGrades(this.courseusers[y]._id, this.currentCourse.courseCode).subscribe(res => {
+          this.teacherservices.semesterStudentTotalGrades(this.courseusers[y]._id, this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
             this.usertotalgrades = res
             this.usertotalgradestotal[y] = this.usertotalgrades;
           }, err => {
@@ -113,7 +123,5 @@ export class GradesComponentt implements OnInit {
     });
 
 
-
   }
-
 }

@@ -1,4 +1,4 @@
-<section class="main-section" id="main" style="height: 5000px!important;">
+<section class="main-section" id="main" style="height: 1200px!important;">
 
     <div class="wave">
 
@@ -24,23 +24,23 @@
                         <h1 class="course-name" data-aos="fade-up" data-aos-delay="" *ngIf="coursesdata">
                             {{coursesdata.courseName}}</h1>
                     </div>
+                    <div class="col-md-7 text-center hero-text">
+                        <h1 class="course-name" data-aos="fade-up" data-aos-delay="" *ngIf="semesterdata">
+                            {{semesterdata.semesters[0].semester_time}}</h1>
+                    </div>
                 </div>
                 <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="" *ngIf="coursesdata">
                     <button type="button" *ngIf="isTeacherOrStudent"
                         class="attend-btn courses-btn btn-secondary hvr-rectangle-in"
-                        [routerLink]="['/course/information']"
-                        value="courses-info">Information</button>
+                        [routerLink]="['/course/semester/information']" value="courses-info">Information</button>
                     <button type="button" *ngIf="isTeacherOrStudent" class="attend-btn courses-btn hvr-rectangle-in"
-                        [routerLink]="['/course/attendance']"
-                        value="attendance">Attendance</button>
+                        [routerLink]="['/course/semester/attendance']" value="attendance">Attendance</button>
                     <button type="button" *ngIf="isTeacherOrStudent" class="attend-btn courses-btn hvr-rectangle-in"
-                        [routerLink]="['/course/assignments']"
-                        value="assignmentat">Assignments</button>
+                        [routerLink]="['/course/semester/assignments']" value="assignmentat">Assignments</button>
                     <button type="button" *ngIf="isStudent" class="attend-btn courses-btn hvr-rectangle-in"
-                        [routerLink]="['/course/mygrades']" value="grades">Grades</button>
+                        [routerLink]="['/course/semester/mygrades']" value="grades">Grades</button>
                     <button type="button" *ngIf="isTeacher" class="attend-btn courses-btn hvr-rectangle-in"
-                        [routerLink]="['/course/students/grades']"
-                        value="grades">Grades</button>
+                        [routerLink]="['/course/semester/students/grades']" value="grades">Grades</button>
                 </div>
             </div>
         </div>

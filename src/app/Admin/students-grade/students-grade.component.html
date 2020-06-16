@@ -33,22 +33,26 @@
                         <td>{{userdata.user.name}}</td>
                         <td *ngFor="let fdata of things[i]">{{fdata.score}}</td>
                         <th scope="row">{{userdata.totalGrades.totalGrades}}</th>
-    
+
                     </tr>
                 </tbody>
             </table>
             <br>
             <br>
             <br>
-            <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in"
-                *ngIf="courseDataCode" [routerLink]="['/course/add-student-grade',courseDataCode.courseCode]"
-                value="students-sheet">Add Grade
-            </button>
-            <button type="button" class="attend-btn courseInfo-btn hvr-rectangle-in" *ngIf="courseDataCode"
-                [routerLink]="['/course/update-student-grade',courseDataCode.courseCode]"
-                value="students-sheet">Update
-                Grade
-            </button>
+            <div *ngIf="courseSemesterDataCode">
+                <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in"
+                    *ngIf="courseDataCode"
+                    [routerLink]="['/course/semester/add-student-grade',courseDataCode.courseCode,courseSemesterDataCode.semester_time]"
+                    value="students-sheet">Add Grade
+                </button>
+                <button type="button" class="attend-btn courseInfo-btn hvr-rectangle-in" *ngIf="courseDataCode"
+                    [routerLink]="['/course/semester/update-student-grade',courseDataCode.courseCode,courseSemesterDataCode.semester_time]"
+                    value="students-sheet">Update
+                    Grade
+                </button>
+            </div>
+
         </div>
     </div>
 </section>

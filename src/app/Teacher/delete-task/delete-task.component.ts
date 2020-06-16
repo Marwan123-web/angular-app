@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/_models/course';
-
+import { Semester } from '../../_models/semester';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 @Component({
   selector: 'app-delete-task',
   templateUrl: './delete-task.component.html',
@@ -15,13 +16,14 @@ export class DeleteTaskComponent implements OnInit {
 
 
   currentUser: User;
-
+  currentCourseSemester: Semester;
   _id: string;
   coursedata: any;
   currentCourse: Course;
   taskType: string;
   response: any;
   error: any;
+  coursesemesterdata: any;
 
 
   constructor(
@@ -30,10 +32,13 @@ export class DeleteTaskComponent implements OnInit {
     private teacherservices: TeacherServiceService,
     private _Activatedroute: ActivatedRoute,
     private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
   get isStudent() {
     return this.currentUser && this.currentUser.role === Role.Student;
@@ -52,7 +57,7 @@ export class DeleteTaskComponent implements OnInit {
   DeleteTask() {
     let response = document.getElementById('response');
     let error = document.getElementById('error');
-    this.teacherservices.deleteCourseTask(this.currentCourse.courseCode, this.taskType).subscribe(res => {
+    this.teacherservices.deleteCourseSemesterTask(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.taskType).subscribe(res => {
       this.response = res;
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');
@@ -77,6 +82,13 @@ export class DeleteTaskComponent implements OnInit {
       this.coursedata = res;
     }, err => {
       this.coursedata = err
+    }
+    );
+    this.teacherservices.getCourseSemesterData(this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time).subscribe(res => {
+      this.coursesemesterdata = res.semesters[0];
+
+    }, err => {
+      this.coursesemesterdata = err
     }
     );
 

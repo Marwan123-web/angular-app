@@ -41,7 +41,8 @@
                     <tbody *ngFor="let course of coursedata">
                         <tr>
                             <th scope="row"><a
-                                    [routerLink]="['/course/info', course.courseCode]">{{course.courseCode}}</a></th>
+                                    [routerLink]="['/course/semesters', course.courseCode]">{{course.courseCode}}</a>
+                            </th>
                             <td>{{course.courseName}}</td>
                             <td>{{course.courseDepartment}} </td>
                             <td>{{course.creaditHours}}</td>
