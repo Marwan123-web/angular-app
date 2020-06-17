@@ -1,5 +1,5 @@
 <!-- ======= Main Section ======= -->
-<section class="main-section" id="main">
+<section class="main-section" id="main" style="height: 1200px!important;">
 
     <div class="wave">
 
@@ -48,6 +48,18 @@
                                         <p>{{coursedata.creaditHours}}</p>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <p style="font-weight: bold;">Credit Status:</p>
+                                    </td>
+                                    <td>
+                                        <p>{{coursedata.status}}</p>
+                                        <button type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm"
+                                            (click)="changecoursestatus(coursedata.status)">
+                                            <i class="material-icons">grade</i>
+                                        </button>
+                                    </td>
+                                </tr>
 
 
                             </table>
@@ -56,7 +68,7 @@
 
                     </div>
                     <button type="button" class="attend-btn courseInfo-btn btn-dark hvr-rectangle-in"
-                        [routerLink]="['/course/add-semester', coursedata.courseCode]" value="students-sheet">Add
+                        [routerLink]="['/course/add-semester']" value="students-sheet">Add
                         Course Semester
                     </button>
 
@@ -75,17 +87,18 @@
                     <h1 data-aos="fade-up" data-aos-delay="">Course Semesters</h1>
                 </div>
             </div>
-            <div class="row align-items-stretch" data-aos="fade-up">
+            <div class=" align-items-stretch" data-aos="fade-up">
 
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <div class="courses h-100 text-center" *ngFor="let semester of coursesemesters">
+                <div class="col-lg-4 mb-4 mb-lg-0" *ngIf='coursedata'>
+                    <div class="courses h-100 text-center" *ngFor="let semester of coursesemesters"
+                        (focus)="closSemester()">
                         <span class="department">Semester Name</span>
                         <h3>{{semester.semester_time}}</h3>
                         <ul class="list-unstyled">
                             <li><strong>Semester Status:</strong>{{semester.semester_status}}</li>
                         </ul>
-                        <p><a [routerLink]="['/course/semester/info', coursedata.courseCode,semester.semester_time]"
-                                class="btn btn-white">Open</a></p>
+                        <p><a (focus)="openSemester(coursedata.courseCode,semester.semester_time)"
+                                [routerLink]="['/course/semester/info']" class="btn btn-white">Open</a></p>
                     </div>
                 </div>
 

@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { TeacherServiceService } from 'src/app/services/teacher-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { CourseService } from 'src/app/services/course.service';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 import { User } from '../../_models';
 import { Course } from '../../_models/course';
 import { Semester } from '../../_models/semester';
 
 import { first } from 'rxjs/operators';
-import { CourseService } from 'src/app/services/course.service';
-import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 
 declare var $: any;
 @Component({
@@ -40,8 +40,6 @@ export class CoursesComponents implements OnInit {
     this.currentUser = this.authenticationService.currentUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
     this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
-
-
   }
   selectChangeHandler(event: any) {
     //update the ui

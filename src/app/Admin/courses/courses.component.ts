@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminservicesService } from 'src/app/services/adminservices.service';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { UserserviceService } from 'src/app/services/userservice.service';
+import { CourseService } from 'src/app/services/course.service';
+import { SemesterserviceService } from 'src/app/services/semesterservice.service';
+import { User } from '../../_models';
+import { Course } from '../../_models/course';
+import { Semester } from '../../_models/semester';
+import { first } from 'rxjs/operators';
 declare var $: any;
 @Component({
   selector: 'app-courses',
@@ -9,9 +16,22 @@ declare var $: any;
 })
 
 export class CoursesComponent implements OnInit {
+  currentClickedUser: User;
+  currentCourse: Course;
+  currentCourseSemester: Semester;
+
   coursedata: any[];
   department: any;
-  constructor(private adminservices: AdminservicesService) { }
+  constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
+    private _router: Router,
+    private userserviceService: UserserviceService,
+    private courseService: CourseService,
+    private semesterserviceService: SemesterserviceService
+  ) {
+    this.currentClickedUser = this.userserviceService.currentClickedUserValue;
+    this.currentCourse = this.courseService.currentCourseValue;
+    this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
+  }
   selectChangeHandler(event: any) {
     //update the ui
     this.department = event.target.value;
@@ -239,5 +259,35 @@ export class CoursesComponent implements OnInit {
 
 
   }
+  // closClickedUser() {
+  //   this.userserviceService.closeClickedUser();
+  // }
+  // openClickedUser(id) {
+  //   this.userserviceService.getClickedUser(id).pipe(first()).subscribe(res => {
+  //   }, err => {
+  //     console.log('Fail to get Course');
+  //   }
+  //   );
+  // }
+  closCourse() {
+    this.courseService.closeCourse();
+  }
+  openCourse(courseCode) {
+    this.courseService.getCourse(courseCode).pipe(first()).subscribe(res => {
+    }, err => {
+      console.log('Fail to get Course');
+    }
+    );
+  }
 
+  closSemester() {
+    this.semesterserviceService.closeSemester();
+  }
+  openSemester(courseCode, semester_time) {
+    this.semesterserviceService.getCourseSemesterData(courseCode, semester_time).pipe(first()).subscribe(res => {
+    }, err => {
+      console.log('Fail to get Course Semester');
+    }
+    );
+  }
 }

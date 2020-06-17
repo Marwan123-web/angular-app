@@ -42,13 +42,11 @@
             <br>
             <div *ngIf="courseSemesterDataCode">
                 <button type="button" class="attend-btn courseInfo-btn btn-success hvr-rectangle-in"
-                    *ngIf="courseDataCode"
-                    [routerLink]="['/course/semester/add-student-grade',courseDataCode.courseCode,courseSemesterDataCode.semester_time]"
+                    *ngIf="courseDataCode" [routerLink]="['/course/semester/add-student-grade']"
                     value="students-sheet">Add Grade
                 </button>
                 <button type="button" class="attend-btn courseInfo-btn hvr-rectangle-in" *ngIf="courseDataCode"
-                    [routerLink]="['/course/semester/update-student-grade',courseDataCode.courseCode,courseSemesterDataCode.semester_time]"
-                    value="students-sheet">Update
+                    [routerLink]="['/course/semester/update-student-grade']" value="students-sheet">Update
                     Grade
                 </button>
             </div>

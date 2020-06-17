@@ -216,54 +216,54 @@ import { UserCourseInfoComponent } from './Admin/user-course-info/user-course-in
 
       //ana hna ya joo
       {
-        path: 'course/semesters/:id', component: CourseSemestersComponent,
+        path: 'course/semesters', component: CourseSemestersComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
       //ana hna ya joo
       {
-        path: 'course/add-semester/:id', component: AddCourseSemesterComponent,
+        path: 'course/add-semester', component: AddCourseSemesterComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
       {
-        path: 'course/semester/info/:id/:semester', component: CourseInfoComponent,
+        path: 'course/semester/info', component: CourseInfoComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/semester/students-sheet/:id/:semester', component: StudentSheetComponent,
+        path: 'course/semester/students-sheet', component: StudentSheetComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },//--------
 
       {
-        path: 'course/semester/add-course-grade/:id/:semester', component: AddCourseGradeComponent,
+        path: 'course/semester/add-course-grade', component: AddCourseGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/semester/delete-course-grade/:id/:semester', component: DeleteCourseGradeComponent,
+        path: 'course/semester/delete-course-grade', component: DeleteCourseGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/semester/students-grades/:id/:semester', component: StudentsGradeComponent,
+        path: 'course/semester/students-grades', component: StudentsGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/semester/add-student-grade/:id/:semester', component: AddStudentGradeComponent,
+        path: 'course/semester/add-student-grade', component: AddStudentGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'course/semester/update-student-grade/:id/:semester', component: UpdateStudentGradeComponent,
+        path: 'course/semester/update-student-grade', component: UpdateStudentGradeComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
@@ -277,12 +277,12 @@ import { UserCourseInfoComponent } from './Admin/user-course-info/user-course-in
       },
 
       {
-        path: 'user/courses/:id', component: UserCoursesComponent,
+        path: 'user/courses', component: UserCoursesComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
       {
-        path: 'user/course/info/:id/:courseCode/:semester', component: UserCourseInfoComponent,
+        path: 'user/course/info', component: UserCourseInfoComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
@@ -306,13 +306,13 @@ import { UserCourseInfoComponent } from './Admin/user-course-info/user-course-in
       },
 
       {
-        path: 'user/add-delete-course/:id', component: AddUserCourseComponent,
+        path: 'user/add-delete-course', component: AddUserCourseComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },
 
       {
-        path: 'user/profile/:id', component: UserProfileComponent,
+        path: 'user/profile', component: UserProfileComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.Admin] }
       },

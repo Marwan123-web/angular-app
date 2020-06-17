@@ -54,24 +54,24 @@
                 <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="" *ngIf="coursedata">
                     <button type="button" class="attend-btn courses-btn btn-dark hvr-rectangle-in"
                         *ngIf="coursesemesterdata"
-                        [routerLink]="['/course/semester/students-sheet', coursedata.courseCode,coursesemesterdata.semester_time]"
+                        [routerLink]="['/course/semester/students-sheet']"
                         value="students-sheet">Students
                         Sheet
                     </button>
                     <button type="button" class="attend-btn courses-btn btn-success hvr-rectangle-in"
                         *ngIf="coursesemesterdata"
-                        [routerLink]="['/course/semester/add-course-grade', coursedata.courseCode,coursesemesterdata.semester_time]"
+                        [routerLink]="['/course/semester/add-course-grade']"
                         value="students-sheet">Add
                         Course Grades
                     </button>
                     <button type="button" class="attend-btn courses-btn btn-danger hvr-rectangle-in"
                         *ngIf="coursesemesterdata"
-                        [routerLink]="['/course/semester/delete-course-grade', coursedata.courseCode,coursesemesterdata.semester_time]"
+                        [routerLink]="['/course/semester/delete-course-grade']"
                         value="students-sheet">Delete Course
                         Grades
                     </button>
                     <button type="button" class="attend-btn courses-btn hvr-rectangle-in" *ngIf="coursesemesterdata"
-                        [routerLink]="['/course/semester/students-grades', coursedata.courseCode,coursesemesterdata.semester_time]"
+                        [routerLink]="['/course/semester/students-grades']"
                         value="students-sheet">Students Grade
                     </button>
                 </div>

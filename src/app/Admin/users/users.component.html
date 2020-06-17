@@ -37,8 +37,10 @@
                         </tr>
                     </thead>
                     <tbody *ngFor='let user of usersdata'>
-                        <tr>
-                            <th scope="row "><a [routerLink]="['/user/profile', user._id]">{{user._id}}</a></th>
+                        <tr (focus)="closClickedUser()">
+                            <th scope="row "><a [routerLink]="['/user/profile']"
+                                    (focus)="openClickedUser(user._id)">{{user._id}}</a>
+                            </th>
                             <td>{{user.name}}</td>
                             <td>{{user.email}}</td>
                             <td>{{user.role}}</td>

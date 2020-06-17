@@ -39,7 +39,8 @@
                                 <tbody *ngIf='coursesdata'>
                                     <tr *ngFor="let tasks of coursesemesterdata">
                                         <th scope="row ">{{tasks.type}}</th>
-                                        <td><a href="www.google.com" target="_blank">{{tasks.path}}</a></td>
+                                        <td><a href="https://www.google.com/?q={{tasks.path}}"
+                                                target="_blank">{{tasks.path}}</a></td>
                                     </tr>
                                 </tbody>
                             </table>

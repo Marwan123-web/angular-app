@@ -39,9 +39,9 @@
                         </tr>
                     </thead>
                     <tbody *ngFor="let course of coursedata">
-                        <tr>
-                            <th scope="row"><a
-                                    [routerLink]="['/course/semesters', course.courseCode]">{{course.courseCode}}</a>
+                        <tr (focus)="closCourse()">
+                            <th scope="row"><a (focus)="openCourse(course.courseCode)"
+                                    [routerLink]="['/course/semesters']">{{course.courseCode}}</a>
                             </th>
                             <td>{{course.courseName}}</td>
                             <td>{{course.courseDepartment}} </td>
