@@ -62,9 +62,8 @@ export class StudentsGradeComponent implements OnInit {
       for (let i = 0; i < this.coursedata.length; i++) {
         this.adminservices.semesterStudentsGradesheet(x, this.currentCourse.courseCode, this.currentCourseSemester.semesters[0].semester_time, this.coursedata[i].type).subscribe(res => {
           // this.fakedata = { "_id": "5eba5bb7900576e5c44f34b2", "studentId": x, "courseId": this.currentCourse.courseCode, "gradeType": this.coursedata[i].type, "score": 100, "__v": 0 }
-          this.useragrade = res;
+          this.useragrade = res.score;
           this.things[y][i] = this.useragrade;
-
         }, err => {
           this.useragrade = err
         });
