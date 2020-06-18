@@ -75,18 +75,19 @@ export class UserCoursesComponent implements OnInit {
     this.adminservices.myCourses(this.currentClickedUser._id).subscribe(res => {
       this.usercoursesdata = res;
       this.arr = []
-      for (let i = 0; i < res.length; i++) {
-        this.adminservices.getCourseSemesterData(this.usercoursesdata[i].Id, this.usercoursesdata[i].semester_time).subscribe(res => {
-          this.coursesdata = res;
-          this.semesterdata = this.coursesdata.semesters[0]
-          var objectC = { ...this.usercoursesdata[i], ...this.coursesdata };
-          this.arr[i] = objectC
-        }, err => {
-          this.coursesdata = err
+      if (res) {
+        for (let i = 0; i < res.length; i++) {
+          this.adminservices.getCourseSemesterData(this.usercoursesdata[i].Id, this.usercoursesdata[i].semester_time).subscribe(res => {
+            this.coursesdata = res;
+            this.semesterdata = this.coursesdata.semesters[0]
+            var objectC = { ...this.usercoursesdata[i], ...this.coursesdata };
+            this.arr[i] = objectC
+          }, err => {
+            this.coursesdata = err
+          }
+          );
         }
-        );
       }
-
     }, err => {
       this.usercoursesdata = err
     }

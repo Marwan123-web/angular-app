@@ -23,6 +23,7 @@ export class CourseSemestersComponent implements OnInit {
   numberofusers: any;
   coursesemesters: any;
   courseStatusCahnge: any;
+  passOrFail: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router,
     private userserviceService: UserserviceService,
@@ -44,16 +45,7 @@ export class CourseSemestersComponent implements OnInit {
     }
     );
   }
-  ngOnInit(): void {
-    this.getcoursedata();
-  }
-  changecoursestatus(status) {
-    if (status == "active") {
-      this.changeto = "finished"
-    }
-    else if (status == "finished") {
-      this.changeto = "active"
-    }
+  changecoursestatusService() {
     this.adminservices.changeCourseStatus(this.currentCourse.courseCode, this.changeto).subscribe(res => {
       this.courseStatusCahnge = res;
       this.getcoursedata();
@@ -61,6 +53,32 @@ export class CourseSemestersComponent implements OnInit {
       this.courseStatusCahnge = err
     }
     );
+  }
+  decidePassOrFailService() {
+    this.adminservices.decideStudentsPassOrFail(this.currentCourse.courseCode).subscribe(res => {
+      this.passOrFail = res;
+      if (res) {
+        this.changecoursestatusService();
+      }
+    }, err => {
+      this.passOrFail = err
+    }
+    );
+  }
+  ngOnInit(): void {
+    this.getcoursedata();
+  }
+  changecoursestatus(status) {
+    if (status == "active") {
+      this.changeto = "disable"
+      this.decidePassOrFailService();
+    }
+    else if (status == "disable") {
+      this.changeto = "active"
+      this.changecoursestatusService();
+    }
+
+
 
   }
   closCourse() {

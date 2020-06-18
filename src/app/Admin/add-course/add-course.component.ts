@@ -25,6 +25,7 @@ export class AddCourseComponent implements OnInit {
     let error = document.getElementById('error');
     this.adminservices.addCourse(this.courseCode, this.courseName, this.courseDepartment, this.creditHours).subscribe(res => {
       this.response = res;
+      console.log(res)
       if (error.classList.contains('d-block')) {
         error.classList.replace('d-block', 'd-none');
       }
