@@ -52,19 +52,19 @@
                                         <p>{{userdata.dataOfJoin}}</p>
                                     </td>
                                 </tr>
-                                <tr *ngIf="usercredithours">
-                                    <td>
+                                <tr *ngIf="isStudent">
+                                    <td *ngIf="usercredithours">
                                         <p style="font-weight: bold;">Finished Hours:</p>
                                     </td>
-                                    <td>
+                                    <td *ngIf="usercredithours">
                                         <p>{{usercredithours}} Hours</p>
                                     </td>
                                 </tr>
-                                <tr *ngIf="nohours">
-                                    <td>
+                                <tr *ngIf="isStudent">
+                                    <td *ngIf="nohours">
                                         <p style="font-weight: bold;">Finished Hours:</p>
                                     </td>
-                                    <td>
+                                    <td *ngIf="nohours">
                                         <p>{{nohours}}</p>
                                     </td>
                                 </tr>

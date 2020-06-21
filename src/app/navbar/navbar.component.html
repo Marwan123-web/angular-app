@@ -34,6 +34,10 @@
                             <li [class.active]="router.url==='/mycourses'"><a routerLink='/mycourses'
                                     *ngIf="isTeacherOrStudent" name='courses' id="courses" class="nav-link">Courses</a>
                             </li>
+                            <li [class.active]="router.url==='/register/courses'"><a routerLink='/register/courses'
+                                    *ngIf="isTeacherOrStudent" name='recourses' id="recourses" class="nav-link">Courses
+                                    Registeration</a>
+                            </li>
                             <li [class.active]="router.url==='/notifications'"><a routerLink='/notifications'
                                     name='noti' id="noti" *ngIf="isTeacherOrStudent" class="nav-link">Notifications</a>
                             </li>

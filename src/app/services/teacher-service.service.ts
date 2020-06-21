@@ -39,6 +39,10 @@ export class TeacherServiceService {
   courseIdBody: any;
   studentIdBodyBody: any;
   gradeType: any;
+  addUserCourseBody: { courseCode: any; };
+  addUserCourseId: any;
+  deleteUserCourseBody: any;
+  deleteUserCourseId: any;
 
   constructor(private httpClient: HttpClient) { }
   public getCourseSemesterData(courseCode, semester_time): Observable<any> {
@@ -190,5 +194,20 @@ export class TeacherServiceService {
   public myCoursesByStatus(id, status): Observable<any> {
     this.userId = id;
     return this.httpClient.get(`http://localhost:3000/my/courses/bystatus/${this.userId}/${status}`);
+  }
+  public addUserCourse(id, courseCode): Observable<any> {
+    this.addUserCourseBody = { courseCode };
+    this.addUserCourseId = id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
+    return this.httpClient.post(`http://localhost:3000/add/user/course/${this.addUserCourseId}`, this.addUserCourseBody, { headers: headers });
+  }
+
+  public deleteUserCourse(id, courseCode): Observable<any> {
+    this.deleteUserCourseBody = courseCode;
+    this.deleteUserCourseId = id;
+    return this.httpClient.delete(`http://localhost:3000/delete/user/course/${this.deleteUserCourseId}/${this.deleteUserCourseBody}`);
+  }
+  public getActiveCourses(): Observable<any> {
+    return this.httpClient.get('http://localhost:3000/courses/active');
   }
 }

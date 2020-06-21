@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { User } from '../_models';
+import { User, Role } from '../_models';
 import { AdminservicesService } from 'src/app/services/adminservices.service';
 declare var $: any;
 @Component({
@@ -20,7 +20,12 @@ export class ProfileComponent implements OnInit {
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
   }
-
+  get isStudent() {
+    return this.currentUser && this.currentUser.role === Role.Student;
+  }
+  get isTeacher() {
+    return this.currentUser && this.currentUser.role === Role.Teacher;
+  }
 
   ngOnInit(): void {
     this.adminservices.profile(this.currentUser._id).subscribe(res => {
@@ -36,7 +41,6 @@ export class ProfileComponent implements OnInit {
       else {
         this.usercredithours = res;
       }
-      console.log(this.usercredithours)
     }, err => {
       this.usercredithours = err
     }

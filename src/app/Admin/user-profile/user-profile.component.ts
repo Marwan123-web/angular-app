@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserserviceService } from 'src/app/services/userservice.service';
 import { CourseService } from 'src/app/services/course.service';
 import { SemesterserviceService } from 'src/app/services/semesterservice.service';
-import { User } from '../../_models';
+import { User, Role } from '../../_models';
 import { Course } from '../../_models/course';
 import { Semester } from '../../_models/semester';
 import { first } from 'rxjs/operators';
@@ -33,7 +33,12 @@ export class UserProfileComponent implements OnInit {
     this.currentCourse = this.courseService.currentCourseValue;
     this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
   }
-
+  get isStudent() {
+    return this.currentClickedUser && this.currentClickedUser.role === Role.Student;
+  }
+  get isTeacher() {
+    return this.currentClickedUser && this.currentClickedUser.role === Role.Teacher;
+  }
   ngOnInit(): void {
     this.adminservices.getUserprofiledata(this.currentClickedUser._id).subscribe(res => {
       this.userdata = res;

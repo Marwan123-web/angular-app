@@ -92,6 +92,7 @@ import { GradesReportComponent } from './Teacher/grades-report/grades-report.com
 import { CourseSemestersComponent } from './Admin/course-semesters/course-semesters.component';
 import { AddCourseSemesterComponent } from './Admin/add-course-semester/add-course-semester.component';
 import { UserCourseInfoComponent } from './Admin/user-course-info/user-course-info.component';
+import { CoursesRegisterationComponent } from './Student/courses-registeration/courses-registeration.component';
 
 
 @NgModule({
@@ -163,6 +164,7 @@ import { UserCourseInfoComponent } from './Admin/user-course-info/user-course-in
     CourseSemestersComponent,
     AddCourseSemesterComponent,
     UserCourseInfoComponent,
+    CoursesRegisterationComponent,
   ],
   imports: [
     BrowserModule,
@@ -319,7 +321,11 @@ import { UserCourseInfoComponent } from './Admin/user-course-info/user-course-in
 
 
       // ------------------------------------------------Student-----------------------------
-
+      {
+        path: 'register/courses', component: CoursesRegisterationComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Teacher, Role.Student] }
+      },
 
       {
         path: 'mycourses', component: CoursesComponents,
