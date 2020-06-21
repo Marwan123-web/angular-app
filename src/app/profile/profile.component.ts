@@ -13,6 +13,8 @@ export class ProfileComponent implements OnInit {
 
   currentUser: User;
   userdata: any;
+  nohours: string;
+  usercredithours: any;
   constructor(private authenticationService: AuthService,
     private adminservices: AdminservicesService
   ) {
@@ -26,8 +28,21 @@ export class ProfileComponent implements OnInit {
     }, err => {
       this.userdata = err;
     });
-        /*==================================================================
-    [ Focus input ]*/
+    this.adminservices.calculatMyCreditHours(this.currentUser._id).subscribe(res => {
+
+      if (res == 0) {
+        this.nohours = 'No Finished Hours Yet'
+      }
+      else {
+        this.usercredithours = res;
+      }
+      console.log(this.usercredithours)
+    }, err => {
+      this.usercredithours = err
+    }
+    );
+    /*==================================================================
+[ Focus input ]*/
     $('.input100').each(function () {
       $(this).on('blur', function () {
         if ($(this).val().trim() != "") {

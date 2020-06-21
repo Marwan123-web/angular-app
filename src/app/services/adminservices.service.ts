@@ -229,5 +229,8 @@ export class AdminservicesService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     return this.httpClient.put(`http://localhost:3000/change/student/course/status/${courseCode}`, { headers: headers });
   }
-
+  public calculatMyCreditHours(id): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
+    return this.httpClient.put(`http://localhost:3000/calculate/my/credit/hours/${id}`, { headers: headers });
+  }
 }

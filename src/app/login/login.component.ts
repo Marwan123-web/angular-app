@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.Id = idinput.value, this.password = passwordinput.value;
     let error = document.getElementById('error');
     this.authservice.login(this.Id, this.password).pipe(first()).subscribe(res => {
-      this.response = res;
+      this.response = res.msg;
       this.router.navigate([this.returnUrl]);
 
     }, err => {

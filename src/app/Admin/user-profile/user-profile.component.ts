@@ -21,6 +21,8 @@ export class UserProfileComponent implements OnInit {
 
   _id: any;
   userdata: any;
+  usercredithours: any;
+  nohours: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router,
     private userserviceService: UserserviceService,
@@ -39,6 +41,20 @@ export class UserProfileComponent implements OnInit {
       this.userdata = err
     }
     );
+    this.adminservices.calculatMyCreditHours(this.currentClickedUser._id).subscribe(res => {
+
+      if (res == 0) {
+        this.nohours = 'No Finished Hours Yet'
+      }
+      else {
+        this.usercredithours = res;
+      }
+      console.log(this.usercredithours)
+    }, err => {
+      this.usercredithours = err
+    }
+    );
+
 
   }
   closClickedUser() {
